@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Resumes on Vivian Lam</title>
+    <link>/resume/</link>
+    <description>Recent content in Resumes on Vivian Lam</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Fri, 13 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/resume/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About me</title>
+      <link>/resume/about-me/</link>
+      <pubDate>Fri, 13 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/resume/about-me/</guid>
+      <description>Vivian Lam
+Vivianlam282@gmail.com
+Objective : Looking for a position around a pharmacy or science setting that will enable me to gain experience and knowledge of the responsibilities of a pharmacist or a pharmacy technician.
+Education :
+University of Texas at Austin
+• Third year
+• Majoring in human biology
+• Pre-pharmacy student
+• Austin YAD financial director
+Experience :
+Jason’s Deli
+Cashier/Food Runner || June 2016-June 2017
+Student Associate</description>
+    </item>
+    
+  </channel>
+</rss>
