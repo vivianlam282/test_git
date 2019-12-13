@@ -127,3 +127,31 @@ After doing this, you may fix the identity used for this commit with:
  create mode 100644 content/IMG_8629.png
  create mode 100644 public/IMG_8629.png
 ]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git commit -m "some message"[6Ppush origin masteradd .[K
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git add .commit -m "some message"[6Ppush origin master
+Username for 'https://github.com': vivianlam282
+Password for 'https://vivianlam282@github.com': 
+To https://github.com/vivianlam282/website.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/vivianlam282/website.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push origin masteradd .[Kpush origin master[Kgit push origin masteradd .[Kcommit -m "some message"
+[master 7ef2892] some message
+ Committer: Mona Lisa <vl5844@educcomp03.ccbb.utexas.edu>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 9 files changed, 48 insertions(+), 7 deletions(-)
+ delete mode 100644 themes/hugo-sustain/exampleSite/static/img/profile.png
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git commit -m "some message"[6Ppush origin masteradd .[K
