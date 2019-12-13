@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Vivian Lam" />
+    <meta name="description" content="Describe your website">
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/favicon.ico">
+    <title>Project 2: Modeling, Testing, and Predicting</title>
+    <meta name="generator" content="Hugo 0.61.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="../../blog/">BLOG</a></li>
+        
+        <li><a href="../../projects/">PROJECTS</a></li>
+        
+        <li><a href="../../resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="../../project2/project2/">Project 2: Modeling, Testing, and Predicting</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          January 1, 0001
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<div id="modeling" class="section level1">
+<h1>Modeling</h1>
+<div id="instructions" class="section level2">
+<h2>Instructions</h2>
+<p>A knitted R Markdown document (as a PDF) and the raw R Markdown file (as .Rmd) should both be submitted to Canvas by 11:59pm on 11/24/2019. These two documents will be graded jointly, so they must be consistent (i.e., don’t change the R Markdown file without also updating the knitted document). Knit an html copy too, for later! In the .Rmd file for Project 2, you can copy the first code-chunk into your project .Rmd file to get better formatting. Notice that you can adjust the opts_chunk$set(…) above to set certain parameters if necessary to make the knitting cleaner (you can globally set the size of all plots, etc). I have gone ahead and set a few for you (such as disabling warnings and package-loading messges when knitting)!</p>
+<p>Like before, I envision your written text forming something of a narrative structure around your code/output. All results presented must have corresponding code. Any answers/results/plots etc. given without the corresponding R code that generated the result will not be graded. Furthermore, all code contained in your final project document should work properly. Please do not include any extraneous code or code which produces error messages. (Code which produces warnings is acceptable, as long as you understand what the warnings mean).</p>
+</div>
+<div id="find-data" class="section level2">
+<h2>Find data:</h2>
+<p>Find one dataset with at least 5 variables that wish to use to build model. At least one should be categorical (with 2-5 groups) and at least two should be numeric. Ideally, one of your variables will be binary (if not, you will need to create one by discretizing a numeric, which is workable but less than ideal). You will need a minimum of 40 observations (<em>at least</em> 10 observations for every explanatory variable you have, ideally 20+ observations/variable).</p>
+<p>It is perfectly fine to use either dataset (or the merged dataset, or a subset of your variables) from Project 1. However, you could also diversify your portfolio a bit by choosing a different dataset to work with (particularly if the variables did not reveal interesting associations in Project 1). The only requirement/restriction is that you may not use data from any examples we have done in class or lab. It would be a good idea to pick more cohesive data this time around (i.e., variables that you actually thing might have a relationship you would want to test). Think more along the lines of your Biostats project.</p>
+<p>Again, you can use data from anywhere you want (see bottom for resources)! If you want a quick way to see whether a built-in (R) dataset has binary and/or character (i.e., categorical) variables, check out this list: <a href="https://vincentarelbundock.github.io/Rdatasets/datasets.html" class="uri">https://vincentarelbundock.github.io/Rdatasets/datasets.html</a>.</p>
+</div>
+<div id="guidelines-and-rubrc" class="section level2">
+<h2>Guidelines and Rubrc</h2>
+<ul>
+<li><strong>0. (5 pts)</strong> Introduce your dataset and each of your variables (or just your main variables if you have lots) in a paragraph.</li>
+</ul>
+<pre class="r"><code>ICU&lt;-read_csv(&quot;ICU.csv&quot;)
+view(ICU)</code></pre>
+<p>This Intensive Care Unit Patients dataset includes data from a sample of 200 pateints at an ICU. There are 9 varibles presents : patient ID code, patient survial, age, age group, sex, infection suspected, systolic blood pressure, heart rate, and status of admission.</p>
+<ul>
+<li><strong>1. (15 pts)</strong> Perform a MANOVA testing whether any of your numeric variables (or a subset of them, if including them all doesn’t make sense) show a mean difference across levels of one of your categorical variables (3). If they do, perform univariate ANOVAs to find response(s) showing a mean difference across groups (3), and perform post-hoc t tests to find which groups differ (3). Discuss the number of tests you have performed, calculate the probability of at least one type I error (if unadjusted), and adjust the significance level accordingly (bonferroni correction) before discussing significant differences (3). Briefly discuss assumptions and whether or not they are likely to have been met (2).</li>
+</ul>
+<pre class="r"><code>#MANOVA
+manova&lt;-manova(cbind(Age,SysBP,Pulse)~Survive, data=ICU)
+summary(manova)</code></pre>
+<pre><code>## Df Pillai approx F num Df den Df Pr(&gt;F)
+## Survive 1 0.081387 5.7884 3 196 0.0008221 ***
+## Residuals 198
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre class="r"><code>#univariate ANOVA
+library(mvtnorm)
+ICU%&gt;%group_by(Survive)%&gt;%summarize(mean(Age),mean(SysBP),mean(Pulse))</code></pre>
+<pre><code>## # A tibble: 2 x 4
+##   Survive `mean(Age)` `mean(SysBP)` `mean(Pulse)`
+##     &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+## 1       0        65.1          119.         101. 
+## 2       1        55.6          136.          98.5</code></pre>
+<pre class="r"><code>ICU$Survive &lt;-factor(ICU$Survive)
+summary.aov(manova)</code></pre>
+<pre><code>## Response Age :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Survive 1 2873 2872.82 7.3717 0.007211 **
+## Residuals 198 77163 389.71
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Response SysBP :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Survive 1 9052 9051.9 8.657 0.003647 **
+## Residuals 198 207030 1045.6
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Response Pulse :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Survive 1 144 144.50 0.1999 0.6553
+## Residuals 198 143101 722.73</code></pre>
+<pre class="r"><code>#post hoc
+pairwise.t.test(ICU$Age,ICU$Survive,p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  ICU$Age and ICU$Survive 
+## 
+##   0     
+## 1 0.0072
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(ICU$SysBP,ICU$Survive,p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  ICU$SysBP and ICU$Survive 
+## 
+##   0     
+## 1 0.0036
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>#type 1 error
+#number of tests = 1 MANOVA, 3 ANOVA, 2 t tests
+type1error=1-(1-0.05)^6
+type1error</code></pre>
+<pre><code>## [1] 0.2649081</code></pre>
+<pre class="r"><code>#Boneforroni
+Boneforroni=(0.05)/6
+Boneforroni</code></pre>
+<pre><code>## [1] 0.008333333</code></pre>
+<pre class="r"><code>#adjusted
+pairwise.t.test(ICU$Age,ICU$Survive,p.adj=&quot;bonf&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  ICU$Age and ICU$Survive 
+## 
+##   0     
+## 1 0.0072
+## 
+## P value adjustment method: bonferroni</code></pre>
+<pre class="r"><code>pairwise.t.test(ICU$SysBP,ICU$Survive,p.adj=&quot;bonf&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  ICU$SysBP and ICU$Survive 
+## 
+##   0     
+## 1 0.0036
+## 
+## P value adjustment method: bonferroni</code></pre>
+<p>A MANOVA was conducted to determine the effect of age, systolic blood pressure, and heart rate on survial. The p-value of 0.0008221 is lower than the alpha value of 0.05. We reject the null hypothesis and conclude that at least one of these variables, the means are different. Since this is significant, I continued with running a univariate ANOVA to see which variables are significant and post-hoc-t-test to see which ones differed.</p>
+<p>Based on the ANOVA, we see that the means of at least one reponse varibale differs. The p-value is 0.0072 for test with age and 0.0036 for the test with systolic blood pressure. These are both less than the alpha value of 0.05 so we reject the null hypothesis and continue with running 2 post-hoc-t-tests. For blood pressure, the p-value of 0.6553 is greater than 0.05 so we fail to reject the null hypothesis. We can conclude that for blood pressurem, the means of each group are about equal.</p>
+<p>There were 6 hypothesis tests ran (1 MANOVA, 3 ANOVA, 2 post-hoc-t-tests). The calculated overall type 1 error rate was 0.2649081. The boneferroni adjusted significance level was calculated by 0.05/6 to be 0.008333333.</p>
+<p>For tests of ANOVA, we assume random sample and independent observations. This are likely to be met because they are a random sample of 200 patients from a larger study. There are also many assumptions for running MANOVA/ANOVA test. Both assume dependent variable have multivariate normality,homogeneity of within-group covariance matricies, and no extreme outliers.</p>
+<ul>
+<li><strong>2. (10 pts)</strong> Perform some kind of randomization test on your data (that makes sense). This can be anything you want! State null and alternative hypotheses, perform the test, and interpret the results (7). Create a plot visualizing the null distribution and the test statistic (3).</li>
+</ul>
+<pre class="r"><code>#Two Sample t-test
+ICU%&gt;%group_by(Survive)%&gt;%summarize(`mean BP`=mean(SysBP),sd=sd(SysBP),n=n())</code></pre>
+<pre><code>## # A tibble: 2 x 4
+##   Survive `mean BP`    sd     n
+##   &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+## 1 0            119.  41.1    40
+## 2 1            136.  29.8   160</code></pre>
+<pre class="r"><code>t.test(data=ICU, SysBP~Survive, var.eq=T)</code></pre>
+<pre><code>##
+## Two Sample t-test
+##
+## data: SysBP by Survive
+## t = -2.9423, df = 198, p-value = 0.003647
+## alternative hypothesis: true difference in means is not
+equal to 0
+## 95 percent confidence interval:
+## -28.091252 -5.546248
+## sample estimates:
+## mean in group 0 mean in group 1
+## 118.8250 135.6438</code></pre>
+<pre class="r"><code>#plot
+hist(ICU$SysBP, main=&quot;Histogram for Systolic Blood Pressure&quot;, 
+     xlab=&quot;Systolic Blood Pressure&quot;, 
+     col=&quot;light green&quot;,
+     xlim=c(30,260),
+     las=1, 
+     breaks=20)</code></pre>
+<p><img src="../../hugo-goa-demo/project/project2/Project2_files/figure-html/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /> The null hypothesis for the 2 sample t-test states that the mean systolic blood pressure between the 2 groups, survived and not survived, are equal. The alternative hypothesis for the 2 sample t-test states that the mean systolic blood pressure between the 2 groups are not equal. I ran a 2 sample t-test and found that the p-value is 0.003647 which is lower than the alpha p-value of 0.05. We reject the null hypothesis and conclude that the mean systolic blood pressure between those who survived and those who did not survive were not equal.</p>
+<ul>
+<li><p><strong>3. (35 pts)</strong> Build a linear regression model predicting one of your response variables from at least 2 other variables, including their interaction. Mean-center any numeric variables involved in the interaction.</p>
+<ul>
+<li>Interpret the coefficient estimates (do not discuss significance) (10)</li>
+<li>Plot the regression using <code>ggplot()</code>. If your interaction is numeric by numeric, refer to code near the end of WS15 to make the plot. If you have 3 or more predictors, just chose two to plot for convenience. (7)</li>
+<li>Check assumptions of linearity, normality, and homoskedasticity either graphically or using a hypothesis test (3)</li>
+<li>Regardless, recompute regression results with robust standard errors via <code>coeftest(..., vcov=vcovHC(...))</code>. Discuss significance of results, including any changes from before/after robust SEs if applicable. (7)</li>
+<li>What proportion of the variation in the outcome does your model explain? (3)</li>
+<li>Finally, rerun the regression but without interactions (just main effects); compare this with the interaction model and the null model using a likelihood ratio test (4)</li>
+</ul></li>
+</ul>
+<pre class="r"><code>library(lmtest)
+
+#Interpret the coefficient estimates
+fit1&lt;-lm(SysBP~Age*Survive,data = ICU)
+summary(fit1)</code></pre>
+<pre><code>##
+## Call:
+## lm(formula = SysBP ~ Age * Survive, data = ICU)
+##
+## Residuals:
+## Min 1Q Median 3Q Max
+## -88.445 -22.074 -1.785 18.327 129.937
+##
+## Coefficients:
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 149.9895 20.6752 7.255 9.15e-12 ***
+## Age -0.4785 0.3078 -1.555 0.1216
+## Survive1 -27.6594 21.9470 -1.260 0.2091
+## Age:Survive1 0.7178 0.3319 2.162 0.0318 *
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Residual standard error: 32 on 196 degrees of freedom
+## Multiple R-squared: 0.07092, Adjusted R-squared: 0.0567
+## F-statistic: 4.987 on 3 and 196 DF, p-value: 0.002347</code></pre>
+<pre class="r"><code>#Regression plot
+ICU2&lt;-ICU%&gt;%mutate(y=ifelse(Survive == &quot;Yes&quot;,&quot;1&quot;,&quot;0&quot;))
+fit5&lt;-glm(Survive~Age, family = &quot;binomial&quot;, data=ICU2)
+coeftest(fit5) </code></pre>
+<pre><code>##
+## z test of coefficients:
+##
+## Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept) 3.058513 0.696081 4.3939 1.113e-05 ***
+## Age -0.027543 0.010564 -2.6072 0.009129 **
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre class="r"><code>ICU$prob&lt;-predict(fit5,type=&quot;response&quot;)
+ICU$Survive&lt;-as.factor(ICU$Survive)
+ggplot(ICU,aes(Age,prob))+geom_point(aes(color=Survive),alpha=0.5,size=2)</code></pre>
+<p><img src="../../hugo-goa-demo/project/project2/Project2_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#plot - assumption of normality
+library(tidyverse)
+library(ggplot2)
+ICU$Survive&lt;-factor(ICU$Survive,labels=c(&quot;Yes&quot;, &quot;No&quot;))
+ICU$Sex&lt;-factor(ICU$Sex,labels=c(&quot;F&quot;,&quot;M&quot;))
+ICU%&gt;%ggplot(aes(Age,SysBP))+geom_point()+geom_smooth(method=&#39;lm&#39;,se=F)</code></pre>
+<p><img src="../../hugo-goa-demo/project/project2/Project2_files/figure-html/unnamed-chunk-4-2.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#regression using heteroskedasticity robust standard errors
+library(sandwich)
+coeftest(fit1,vcov=vcovHC(fit1))</code></pre>
+<pre><code>##
+## t test of coefficients:
+##
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 149.98948 21.65535 6.9262 6.048e-11 ***
+## Age -0.47853 0.30341 -1.5772 0.11637
+## Survive1 -27.65936 22.26917 -1.2420 0.21570
+## Age:Survive1 0.71777 0.31911 2.2493 0.02561 *
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre class="r"><code>#rerun the regression but without interactions
+fit&lt;-lm(Age~SysBP,data = ICU)
+coef(fit)</code></pre>
+<pre><code>## (Intercept)       SysBP 
+##  54.1159190   0.0259229</code></pre>
+<pre class="r"><code>cov(ICU$SysBP,ICU$Age)/var(ICU$SysBP)</code></pre>
+<pre><code>## [1] 0.0259229</code></pre>
+<pre class="r"><code>#SS total
+SST&lt;-sum((ICU$Age-mean(ICU$Age))^2)
+#SS Regression
+SSR&lt;-sum((fit1$fitted.values-mean(ICU$Age))^2)
+#SS Error
+SSE&lt;-sum(fit1$residuals^2)
+#SSR/SST is the proportion of the total variation in y not explained
+SSR/SST</code></pre>
+<pre><code>## [1] 14.14857</code></pre>
+<pre class="r"><code>#R squared
+#What proportion of the variation in the outcome does your model explain? 
+summary(fit1)$r.sq</code></pre>
+<pre><code>## [1] 0.07092227</code></pre>
+<p>The intercept 149.9895 is the average systolic blood pressure of the recorded 200 patients in the ICU when there is no interaction with age or survival. The intercept -0.4785 for age indicates that for every 1 year increase in age, there is a decrease of 0.4785 mmHg in systolic blood pressure. The intercept -27.6594 indicates that those patients who did not survive had a systolic pressure 27.6594 lower than those who did survive. The Age:SurviveNo coefficient 0.7178 means that the average systolic blood pressure will increase after including the intereaction between surviving and increasing age.</p>
+<p>When running the regression using heteroskedasticity robust standard errors, the p-value 0.475 was calculated. This is greater than the alpha value of 0.05 so we fail to reject the null hypothesis. This p-value is increased from the one calucluated for the regression results earlier which was 0.009129.</p>
+<p>Based on the data calculated to find R squared, this model explains about 0.07092227 of the variation in the outcome.</p>
+<ul>
+<li><strong>4. (5 pts)</strong> Rerun same regression model (with interaction), but this time compute bootstrapped standard errors. Discuss any changes you observe in SEs and p-values using these SEs compared to the original SEs and the robust SEs)</li>
+</ul>
+<pre class="r"><code>#rerun the regression but without interactions
+fit&lt;-lm(Age~SysBP,data = ICU)
+coef(fit)</code></pre>
+<pre><code>## (Intercept)       SysBP 
+##  54.1159190   0.0259229</code></pre>
+<pre class="r"><code>summary(fit)</code></pre>
+<pre><code>##
+## Call:
+## lm(formula = Age ~ SysBP, data = ICU)
+##
+## Residuals:
+## Min 1Q Median 3Q Max
+## -40.812 -11.016 5.477 14.540 35.225
+##
+## Coefficients:
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 54.11592 5.88992 9.188 &lt;2e-16 ***
+## SysBP 0.02592 0.04321 0.600 0.549
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Residual standard error: 20.09 on 198 degrees of freedom
+## Multiple R-squared: 0.001814, Adjusted R-squared:
+-0.003227
+## F-statistic: 0.3599 on 1 and 198 DF, p-value: 0.5493</code></pre>
+<pre class="r"><code>#Rerun same regression model this time compute bootstrapped standard errors
+ICU_dat&lt;-ICU[sample(nrow(ICU),replace=TRUE),]
+library(lmtest)
+
+samp_distn&lt;-replicate(5000, {
+ ICU_boot&lt;-ICU[sample(nrow(ICU),replace=TRUE),]
+ fit3&lt;-lm(Age~SysBP,data=ICU_boot)
+ coef(fit3)
+
+})
+
+#summary(fit3)
+samp_distn%&gt;%t%&gt;%as.data.frame%&gt;%summarise_all(sd)</code></pre>
+<pre><code>##   (Intercept)     SysBP
+## 1    5.127665 0.0361425</code></pre>
+<p>The regression model from previous calculated a p-value of 0.549 and SE of 0.04321. The regression model after computing bootstrapped standard errors calculated a p-value of 0.776 and SE of 0.04324.</p>
+<ul>
+<li><p><strong>5. (40 pts)</strong> Perform a logistic regression predicting a binary categorical variable (if you don’t have one, make/get one) from at least two explanatory variables (interaction not necessary).</p>
+<ul>
+<li>Interpret coefficient estimates in context (10)</li>
+<li>Report a confusion matrix for your logistic regression (2)</li>
+<li>Compute and discuss the Accuracy, Sensitivity (TPR), Specificity (TNR), and Recall (PPV) of your model (5)</li>
+<li>Using ggplot, plot density of log-odds (logit) by your binary outcome variable (3)</li>
+<li>Generate an ROC curve (plot) and calculate AUC (either manually or with a package); interpret (10)</li>
+<li>Perform 10-fold (or repeated random sub-sampling) CV and report average out-of-sample Accuracy, Sensitivity, and Recall (10)</li>
+</ul>
+<pre class="r"><code>#coefficient estimates
+fit9&lt;-lm(SysBP~Survive,data=ICU)
+summary(fit9)</code></pre>
+<pre><code>##
+## Call:
+## lm(formula = SysBP ~ Survive, data = ICU)
+##
+## Residuals:
+## Min 1Q Median 3Q Max
+## -87.644 -23.644 -2.644 20.356 137.175
+##
+## Coefficients:
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 118.825 5.113 23.241 &lt; 2e-16 ***
+## SurviveNo 16.819 5.716 2.942 0.00365 **
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Residual standard error: 32.34 on 198 degrees of freedom
+## Multiple R-squared: 0.04189, Adjusted R-squared: 0.03705
+## F-statistic: 8.657 on 1 and 198 DF, p-value: 0.003647</code></pre>
+<pre class="r"><code>#confusion matrix
+table(truth=ICU$Survive, prediction=ICU$Sex)</code></pre>
+<pre><code>##      prediction
+## truth   F   M
+##   Yes  24  16
+##   No  100  60</code></pre>
+<pre class="r"><code>#Accuracy
+(24+60)/200</code></pre>
+<pre><code>## [1] 0.42</code></pre>
+<pre class="r"><code>#Sensitivity TPR
+16/40</code></pre>
+<pre><code>## [1] 0.4</code></pre>
+<pre class="r"><code>#Specificity TNR
+100/160</code></pre>
+<pre><code>## [1] 0.625</code></pre>
+<pre class="r"><code>#Precision PPV recall
+16/76</code></pre>
+<pre><code>## [1] 0.2105263</code></pre>
+<pre class="r"><code>#Density of log-odds
+library(dplyr)
+library(MASS)
+library(ggplot2)
+library(tidyverse)
+library(lmtest)
+ICU$odds&lt;-(ICU$prob)/(1-ICU$prob)
+ICU$logit&lt;-(ICU$odds)
+ggplot(ICU)+geom_density(aes(logit,fill= Survive),alpha=0.3)</code></pre>
+<p><img src="../../hugo-goa-demo/project/project2/Project2_files/figure-html/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#ROC Plot
+prob&lt;-predict(fit,type=&quot;response&quot;)
+library(plotROC)
+ROC&lt;-ggplot(ICU)+geom_roc(aes(d=Survive,m=prob),n.cuts=0)
+ROC</code></pre>
+<p><img src="../../hugo-goa-demo/project/project2/Project2_files/figure-html/unnamed-chunk-6-2.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#AUC
+calc_auc(ROC)</code></pre>
+<pre><code>##   PANEL group       AUC
+## 1     1    -1 0.3700781</code></pre>
+<pre class="r"><code>#Class diagnositcs
+class_diag&lt;-function(probs,truth){
+  tab&lt;-table(factor(probs&gt;.5,levels=c(&quot;FALSE&quot;,&quot;TRUE&quot;)),truth)
+  acc=sum(diag(tab))/sum(tab)
+  sens=tab[2,2]/colSums(tab)[2]
+  spec=tab[1,1]/colSums(tab)[1]
+  ppv=tab[2,2]/rowSums(tab)[2]
+  if(is.numeric(truth)==FALSE &amp; is.logical(truth)==FALSE) truth&lt;-as.numeric(truth)-1
+  ord&lt;-order(probs, decreasing=TRUE)
+  probs &lt;- probs[ord]; truth &lt;- truth[ord]
+  TPR=cumsum(truth)/max(1,sum(truth))
+  FPR=cumsum(!truth)/max(1,sum(!truth))
+  dup&lt;-c(probs[-1]&gt;=probs[-length(probs)], FALSE)
+  TPR&lt;-c(0,TPR[!dup],1); FPR&lt;-c(0,FPR[!dup],1)
+  n &lt;- length(TPR)
+  auc&lt;- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+  data.frame(acc,sens,spec,ppv,auc)}
+
+
+#10-fold CV
+set.seed(1234)
+k=10
+data1&lt;-ICU[sample(nrow(ICU)),]
+folds&lt;-cut(seq(1:nrow(ICU)),breaks=k,labels=F)
+diags&lt;-NULL
+for(i in 1:k){
+  train&lt;-data1[folds!=i,]
+  test&lt;-data1[folds==i,]
+  truth&lt;-test$Survive
+  fit&lt;-glm(Survive~Age+SysBP,data=train,family=&quot;binomial&quot;)
+  probs&lt;-predict(fit,newdata = test,type=&quot;response&quot;)
+diags&lt;-rbind(diags,class_diag(probs,truth))
+}
+
+apply(diags,2,mean)</code></pre>
+<pre><code>##       acc      sens      spec       ppv       auc 
+## 0.8100000 1.0000000 0.0400000 0.8078947 0.6795874</code></pre>
+<p>The coefficeint estimate for systolic blood pressure is 16.819. The p-value is 0.00365 which is lower than the alpha level of 0.05. There is a significant effect of systolic blood pressure on those grouped by survival. On average, those individuals who did not survive had a systolic blood pressure 16.819 mmHg higher than those who did survive.</p></li>
+</ul>
+<p>The AUC area under curve is calculated to be 0.3700781. This AUC is relatively poor meaning that systolic blood pressure and age are poor predictors of survival.</p>
+<p>The 10-fold CV average out of sample accuracy is 0.8227273. The sensitivity is 0.9952153, the specificity is 0.1318182 and the recall PPV percision is 0.8248804. The AUC here is 0.6538223 which is still relatively poor meaning that systolic blood pressure and age are poor predictors of survival. But it is greater than the previous AUC of 0.3700781 which means there is no sign of overfitting.</p>
+<ul>
+<li><strong>6. (10 pts)</strong> Choose one variable you want to predict (can be one you used from before; either binary or continuous) and run a LASSO regression inputting all the rest of your variables as predictors. Choose lambda to give the simplest model whose accuracy is near that of the best (i.e., <code>lambda.1se</code>). Discuss which variables are retained. Perform 10-fold CV using this model: if response in binary, compare model’s out-of-sample accuracy to that of your logistic regression in part 5; if response is numeric, compare the residual standard error (at the bottom of the summary output, aka RMSE): lower is better fit!</li>
+</ul>
+<pre class="r"><code>#LASSO
+install.packages(&quot;glmnet&quot;)
+library(glmnet)
+y&lt;-as.matrix(ICU$Survive)
+x&lt;-model.matrix(fit1)
+x</code></pre>
+<pre><code>##     (Intercept) Age Survive1 Age:Survive1
+## 1             1  87        0            0
+## 2             1  27        1           27
+## 3             1  59        1           59
+## 4             1  77        1           77
+## 5             1  76        0            0
+## 6             1  54        1           54
+## 7             1  87        1           87
+## 8             1  69        1           69
+## 9             1  63        1           63
+## 10            1  30        1           30
+## 11            1  35        1           35
+## 12            1  78        0            0
+## 13            1  70        1           70
+## 14            1  55        1           55
+## 15            1  63        0            0
+## 16            1  48        1           48
+## 17            1  66        1           66
+## 18            1  61        1           61
+## 19            1  66        1           66
+## 20            1  52        1           52
+## 21            1  55        1           55
+## 22            1  59        1           59
+## 23            1  63        1           63
+## 24            1  72        1           72
+## 25            1  60        1           60
+## 26            1  78        1           78
+## 27            1  16        1           16
+## 28            1  62        1           62
+## 29            1  61        1           61
+## 30            1  19        0            0
+## 31            1  35        1           35
+## 32            1  74        1           74
+## 33            1  68        1           68
+## 34            1  67        0            0
+## 35            1  69        1           69
+## 36            1  53        0            0
+## 37            1  92        0            0
+## 38            1  51        1           51
+## 39            1  55        1           55
+## 40            1  64        1           64
+## 41            1  88        1           88
+## 42            1  23        1           23
+## 43            1  73        1           73
+## 44            1  53        1           53
+## 45            1  74        1           74
+## 46            1  57        0            0
+## 47            1  75        0            0
+## 48            1  91        0            0
+## 49            1  68        1           68
+## 50            1  70        0            0
+## 51            1  66        1           66
+## 52            1  60        1           60
+## 53            1  64        1           64
+## 54            1  88        0            0
+## 55            1  66        1           66
+## 56            1  19        1           19
+## 57            1  41        0            0
+## 58            1  61        0            0
+## 59            1  18        1           18
+## 60            1  63        1           63
+## 61            1  45        1           45
+## 62            1  64        1           64
+## 63            1  68        1           68
+## 64            1  80        0            0
+## 65            1  64        1           64
+## 66            1  82        1           82
+## 67            1  73        1           73
+## 68            1  70        1           70
+## 69            1  40        0            0
+## 70            1  61        1           61
+## 71            1  64        1           64
+## 72            1  47        1           47
+## 73            1  69        1           69
+## 74            1  75        0            0
+## 75            1  67        1           67
+## 76            1  18        1           18
+## 77            1  77        1           77
+## 78            1  32        1           32
+## 79            1  63        0            0
+## 80            1  19        1           19
+## 81            1  72        1           72
+## 82            1  49        1           49
+## 83            1  75        0            0
+## 84            1  68        1           68
+## 85            1  82        1           82
+## 86            1  32        1           32
+## 87            1  78        1           78
+## 88            1  57        1           57
+## 89            1  46        1           46
+## 90            1  23        1           23
+## 91            1  55        1           55
+## 92            1  18        1           18
+## 93            1  20        0            0
+## 94            1  20        1           20
+## 95            1  75        1           75
+## 96            1  71        0            0
+## 97            1  79        1           79
+## 98            1  40        1           40
+## 99            1  76        1           76
+## 100           1  51        0            0
+## 101           1  66        1           66
+## 102           1  76        1           76
+## 103           1  65        0            0
+## 104           1  80        1           80
+## 105           1  23        1           23
+## 106           1  48        1           48
+## 107           1  69        0            0
+## 108           1  67        1           67
+## 109           1  55        0            0
+## 110           1  69        1           69
+## 111           1  50        0            0
+## 112           1  78        0            0
+## 113           1  65        1           65
+## 114           1  72        1           72
+## 115           1  55        1           55
+## 116           1  40        1           40
+## 117           1  55        1           55
+## 118           1  34        1           34
+## 119           1  71        0            0
+## 120           1  47        1           47
+## 121           1  41        1           41
+## 122           1  84        1           84
+## 123           1  88        1           88
+## 124           1  77        1           77
+## 125           1  80        1           80
+## 126           1  16        1           16
+## 127           1  70        1           70
+## 128           1  83        1           83
+## 129           1  23        1           23
+## 130           1  67        1           67
+## 131           1  18        1           18
+## 132           1  77        1           77
+## 133           1  48        1           48
+## 134           1  24        1           24
+## 135           1  71        1           71
+## 136           1  72        1           72
+## 137           1  85        0            0
+## 138           1  75        0            0
+## 139           1  77        1           77
+## 140           1  60        1           60
+## 141           1  46        1           46
+## 142           1  65        1           65
+## 143           1  36        1           36
+## 144           1  68        1           68
+## 145           1  58        1           58
+## 146           1  76        1           76
+## 147           1  65        0            0
+## 148           1  41        1           41
+## 149           1  20        1           20
+## 150           1  49        0            0
+## 151           1  91        1           91
+## 152           1  75        1           75
+## 153           1  25        1           25
+## 154           1  75        0            0
+## 155           1  70        1           70
+## 156           1  47        1           47
+## 157           1  75        1           75
+## 158           1  40        1           40
+## 159           1  71        1           71
+## 160           1  72        0            0
+## 161           1  70        1           70
+## 162           1  58        1           58
+## 163           1  69        0            0
+## 164           1  64        0            0
+## 165           1  54        1           54
+## 166           1  77        1           77
+## 167           1  55        1           55
+## 168           1  21        1           21
+## 169           1  53        1           53
+## 170           1  31        1           31
+## 171           1  71        1           71
+## 172           1  49        1           49
+## 173           1  60        1           60
+## 174           1  60        0            0
+## 175           1  50        1           50
+## 176           1  45        1           45
+## 177           1  21        1           21
+## 178           1  73        1           73
+## 179           1  28        1           28
+## 180           1  17        1           17
+## 181           1  17        1           17
+## 182           1  21        1           21
+## 183           1  68        1           68
+## 184           1  17        1           17
+## 185           1  60        1           60
+## 186           1  60        0            0
+## 187           1  69        1           69
+## 188           1  88        1           88
+## 189           1  20        1           20
+## 190           1  89        1           89
+## 191           1  62        1           62
+## 192           1  46        1           46
+## 193           1  19        1           19
+## 194           1  71        1           71
+## 195           1  67        1           67
+## 196           1  50        0            0
+## 197           1  20        1           20
+## 198           1  73        1           73
+## 199           1  59        1           59
+## 200           1  42        1           42
+## attr(,&quot;assign&quot;)
+## [1] 0 1 2 3
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$Survive
+## [1] &quot;contr.treatment&quot;</code></pre>
+<pre class="r"><code>x&lt;-x[,-1]
+cv &lt;- cv.glmnet(x, y, family = &quot;binomial&quot;)
+lasso &lt;- glmnet(x, y, family = &quot;binomial&quot;, lambda = cv$lambda.1se)
+coef(lasso)</code></pre>
+<pre><code>## 4 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                      s0
+## (Intercept)    6.635573
+## Age            .       
+## Survive1     -14.658386
+## Age:Survive1   .</code></pre>
+<pre class="r"><code>#10 fold CV
+set.seed(1234)
+k=10
+data1&lt;-ICU[sample(nrow(ICU)),]
+folds&lt;-cut(seq(1:nrow(ICU)),breaks=k,labels=F)
+diags&lt;-NULL
+for(i in 1:k){
+  train&lt;-data1[folds!=i,]
+  test&lt;-data1[folds==i,]
+  truth&lt;-test$Survive
+  fit&lt;-glm(Survive~Age+SysBP,data=train,family=&quot;binomial&quot;)
+  probs&lt;-predict(fit,newdata = test,type=&quot;response&quot;)
+diags&lt;-rbind(diags,class_diag(probs,truth))
+}
+
+apply(diags,2,mean)</code></pre>
+<pre><code>##       acc      sens      spec       ppv       auc 
+## 0.8100000 1.0000000 0.0400000 0.8078947 0.6795874</code></pre>
+</div>
+<div id="where-do-i-find-data-again" class="section level2">
+<h2>Where do I find data again?</h2>
+<p>You can choose ANY datasets you want that meet the above criteria for variables and observations. You can make it as serious as you want, or not, but keep in mind that you will be incorporating this project into a portfolio webpage for your final in this course, so choose something that really reflects who you are, or something that you feel will advance you in the direction you hope to move career-wise, or something that you think is really neat, or whatever. On the flip side, regardless of what you pick, you will be performing all the same tasks, so it doesn’t end up being that big of a deal.</p>
+<p>If you are totally clueless and have no direction at all, log into the server and type</p>
+<pre class="r"><code>data(package = .packages(all.available = TRUE))</code></pre>
+<p>This will print out a list of <strong>ALL datasets in ALL packages</strong> installed on the server (a ton)! Scroll until your eyes bleed! Actually, do not scroll that much… To start with something more manageable, just run the command on your own computer, or just run <code>data()</code> to bring up the datasets in your current environment. To read more about a dataset, do <code>?packagename::datasetname</code>.</p>
+<p>If it is easier for you, and in case you don’t have many packages installed, a list of R datasets from a few common packages (also downloadable in CSV format) is given at the following website: <a href="https://vincentarelbundock.github.io/Rdatasets/datasets.html" class="uri">https://vincentarelbundock.github.io/Rdatasets/datasets.html</a>.</p>
+<ul>
+<li><p>A good package to download for fun/relevant data is <code>fivethiryeight</code>. Run <code>install.packages(&quot;fivethirtyeight&quot;),</code> load the packages with <code>library(fivethirtyeight)</code>, run <code>data()</code>, and then scroll down to view the datasets. Here is an online list of all 127 datasets (with links to the 538 articles). Lots of sports, politics, current events, etc.</p></li>
+<li><p>If you have already started to specialize (e.g., ecology, epidemiology) you might look at discipline-specific R packages (vegan, epi, respectively). We will be using some tools from these packages later in the course, but they come with lots of data too, which you can explore according to the directions above</p></li>
+<li><p>However, you <em>emphatically DO NOT</em> have to use datasets available via R packages! In fact, I would much prefer it if you found the data from completely separate sources and brought them together (a much more realistic experience in the real world)! You can even reuse data from your SDS328M project, provided it shares a variable in common with other data which allows you to merge the two together (e.g., if you still had the timestamp, you could look up the weather that day: <a href="https://www.wunderground.com/history/" class="uri">https://www.wunderground.com/history/</a>). If you work in a research lab or have access to old data, you could potentially merge it with new data from your lab!</p></li>
+<li><p>Here is a curated list of interesting datasets (read-only spreadsheet format): <a href="https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit" class="uri">https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit</a></p></li>
+<li><p>Here is another great compilation of datasets: <a href="https://github.com/rfordatascience/tidytuesday" class="uri">https://github.com/rfordatascience/tidytuesday</a></p></li>
+<li><p>Here is the UCI Machine Learning Repository: <a href="https://archive.ics.uci.edu/ml/index.php" class="uri">https://archive.ics.uci.edu/ml/index.php</a></p>
+<ul>
+<li>See also <a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Biological_data" class="uri">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Biological_data</a></li>
+</ul></li>
+<li><p>Here is another good general place to look: <a href="https://www.kaggle.com/datasets" class="uri">https://www.kaggle.com/datasets</a></p></li>
+<li><p>To help narrow your search down or to see interesting variable ideas, check out <a href="https://www.tylervigen.com/spurious-correlations" class="uri">https://www.tylervigen.com/spurious-correlations</a>. This is the spurious correlations website, and it is fun, but if you look at the bottom of each plot you will see sources for the data. This is a good place to find very general data (or at least get a sense of where you can scrape data together from)!</p></li>
+<li><p>If you are interested in medical data, check out www.countyhealthrankings.org</p></li>
+<li><p>If you are interested in scraping UT data, they make <em>loads</em> of data public (e.g., beyond just professor CVs and syllabi). Check out all the data that is available in the statistical handbooks: <a href="https://reports.utexas.edu/statistical-handbook" class="uri">https://reports.utexas.edu/statistical-handbook</a></p></li>
+</ul>
+<div id="broader-data-sources" class="section level5">
+<h5>Broader data sources:</h5>
+<p><a href="www.data.gov">Data.gov</a> 186,000+ datasets!</p>
+<p><a href="Social%20Explorer">Social Explorer</a> is a nice interface to Census and American Community Survey data (more user-friendly than the government sites). May need to sign up for a free trial.</p>
+<p><a href="www.bls.gov">U.S. Bureau of Labor Statistics</a></p>
+<p><a href="www.census.gov">U.S. Census Bureau</a></p>
+<p><a href="www.gapminder.org/data">Gapminder</a>, data about the world.</p>
+<p>…</p>
+</div>
+</div>
+</div>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="../../js/docs.min.js"></script>
+<script src="../../js/main.js"></script>
+
+<script src="../../js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

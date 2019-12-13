@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Vivian Lam" />
+    <meta name="description" content="Describe your website">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <title>Project 1: Exploratory Data Analysis</title>
+    <meta name="generator" content="Hugo 0.61.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="../blog/">BLOG</a></li>
+        
+        <li><a href="../projects/">PROJECTS</a></li>
+        
+        <li><a href="../resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="../project1/">Project 1: Exploratory Data Analysis</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          January 1, 0001
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<div id="data-wrangling-and-data-exploration" class="section level2">
+<h2>Data Wrangling and Data Exploration</h2>
+<div id="instructions" class="section level3">
+<h3>Instructions</h3>
+<p>A knitted R Markdown document (as a PDF) and the raw R Markdown file (as .Rmd) should both be submitted to Canvas by 11:59pm on 10/20/2019. These two documents will be graded jointly, so they must be consistent (i.e., don’t change the R Markdown file without also updating the knitted document). Knit an html copy too, for later!</p>
+<p>I envision your written text forming something of a narrative structure around your code/output. All results presented must have corresponding code. Any answers/results/plots etc. given without the corresponding R code that generated the result will not be graded. Furthermore, all code contained in your final project document should work properly. Please do not include any extraneous code or code which produces error messages. (Code which produces warnings is acceptable, as long as you understand what the warnings mean).</p>
+</div>
+<div id="find-data" class="section level3">
+<h3>Find data:</h3>
+<p>Find two (!) datasets with one variable in common (e.g., dates, years, states, counties, countries), both with at least 50 observations (i.e., rows) in each. When combined, the resulting/final dataset must have <strong>at least 4 different variables (at least 2 numeric) in addition to the common variable</strong>.</p>
+<p>Choose as many as you would like! If you found two datasets that you like but they don’t have enough variables, find a third dataset with the same common variable and join all three.</p>
+</div>
+<div id="guidelines" class="section level3">
+<h3>Guidelines</h3>
+<ol style="list-style-type: decimal">
+<li><p>If the datasets are not tidy, you will need to reshape them so that every observation has its own row and every variable its own column. If the datasets are both already tidy, you will make them untidy with pivot_wider()/spread() and then tidy them again with pivot_longer/gather() to demonstrate your use of the functions. It’s fine to wait until you have your descriptives to use these functions (e.g., you might want to pivot_wider() to rearrange the data to make your descriptive statistics easier to look at); it’s fine long as you use them at least once!</p>
+<ul>
+<li>Depending on your datasets, it might be a good idea to do this before joining. For example, if you have a dataset you like with multiple measurements per year, but you want to join by year, you could average over your numeric variables to get means/year, do counts for your categoricals to get a counts/year, etc.</li>
+</ul></li>
+</ol>
+<p>Intro : For this project, I decided to work with 2 datasets that illustrate data from countries of the world in attempt to find a relation between drinking and happiness. The first dataset is called ‘drinks’ and it comes from the ‘fivethiryeight’ package. This data comes from the World Health Organization and it focuses on average serving size of beer, wines, and spirits per person in each country. The second dataset is called ‘happy’ and it comes from <a href="https://www.kaggle.com/datasets" class="uri">https://www.kaggle.com/datasets</a>. This data is collected from the Gallup World Poll and organized as a World Happiness Report. The dataset I am using is from 2015 and the variables I am focusing on are country, region, and happiness score. I am interested in the world happiness data because I can see how different factors are quantized and contributed to the overall happiness of a country. I have always wanted to visit the happiest place on Earth and compare their lifestyle to the American lifestyle.I chose the second dataset, ‘drinks’ because I thought it could also be a possible factor of happiness. I am interested in seeing if there is an optimal average amount of alcohol that contributes to happiness in a person.</p>
+<p>Tidying : To tidy the ‘drinks’ dataset, I used pivot_longer to increase the number of rows by separating the types of alcohol and their respectives serving value into new rows for each country. I named this tidy-ed dataset ‘tidydrinks’. For the ‘happy’ dataset, I used pivot_wider to increase the number of columns by creating new columns for each unique region. Then to tidy this dataset, I used pivot_longer, select(), and na.omit() to get rid of any extra data and NA’s. This makes it easier to focus on that data which can be used to join with the ‘drinks’ dataset. I named this tidy-ed dataset ‘tidyhappy’.</p>
+<p>With ‘tidyhappy’, I omitted the NAs and only selected the columns ‘Country’ and ‘Happiness Score’.</p>
+<pre class="r"><code>install.packages(&quot;tinytex&quot;)</code></pre>
+<pre><code>## Installing package into &#39;/stor/home/vl5844/R/x86_64-pc-linux-gnu-library/3.4&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre class="r"><code>tinytex::install_tinytex()</code></pre>
+<pre><code>## Warning: Detected an existing tlmgr at /stor/home/vl5844/bin/tlmgr. It seems
+## TeX Live has been installed (check tinytex::tinytex_root()). You are recommended
+## to uninstall it, although TinyTeX should work well alongside another LaTeX
+## distribution if a LaTeX document is compiled through tinytex::latexmk().</code></pre>
+<pre><code>## TinyTeX installed to /stor/home/vl5844/.TinyTeX</code></pre>
+<pre><code>## You may have to restart your system after installing TinyTeX to make sure ~/bin appears in your PATH variable (https://github.com/yihui/tinytex/issues/16).</code></pre>
+<pre class="r"><code>library(tidyr)
+install.packages(&quot;fivethirtyeight&quot;)</code></pre>
+<pre><code>## Installing package into &#39;/stor/home/vl5844/R/x86_64-pc-linux-gnu-library/3.4&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre class="r"><code>library(fivethirtyeight)
+
+tidydrinks&lt;-drinks%&gt;%pivot_longer(contains(&quot;_&quot;))%&gt;%separate(name,into = c(&quot;type&quot; ,&quot;servings&quot;))</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 193 rows [4, 8, 12,
+## 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, ...].</code></pre>
+<pre class="r"><code>library(readr)
+happy &lt;- read_csv(&quot;2015.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Country = col_character(),
+##   Region = col_character(),
+##   `Happiness Rank` = col_double(),
+##   `Happiness Score` = col_double(),
+##   `Standard Error` = col_double(),
+##   `Economy (GDP per Capita)` = col_double(),
+##   Family = col_double(),
+##   `Health (Life Expectancy)` = col_double(),
+##   Freedom = col_double(),
+##   `Trust (Government Corruption)` = col_double(),
+##   Generosity = col_double(),
+##   `Dystopia Residual` = col_double()
+## )</code></pre>
+<pre class="r"><code>tidyhappy&lt;-happy%&gt;%pivot_wider(names_from = &quot;Region&quot;, values_from = &quot;Happiness Score&quot;)
+tidyhappy&lt;- tidyhappy%&gt;%pivot_longer(11:20,names_to = &quot;Region&quot;, values_to = &quot;Happiness Score&quot;)
+
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>tidyhappy&lt;-tidyhappy%&gt;%select(Country,`Happiness Score`)%&gt;%na.omit()</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Join your 2+ separate data sources into a single dataset</p>
+<ul>
+<li>You will document the type of join that you do (left/right/inner/full), including how many cases in each dataset were dropped and why you chose this particular join</li>
+</ul></li>
+</ol>
+<p>I used an inner_join to join these 2 data sources into a single dataset. I joined them by country and named the new, single dataset ‘projectjoin’. I chose to do an inner_join so that the return data would only show matching countries between the datasets ‘tidyhappy’ and ‘tidydrinks’. I used antijoin for each dataset to find which rows did not have a match with the joint dataset.</p>
+<p>Since not all countires were shared between the 2 datasets, some cases had to be dropped. 192 cases from ‘tidydrinks’ and 13 cases from ‘tidyhappy’ were dropped. The problem with having dropped datasets is that those are data that is not counted for.Removing NA cleans up the data by removing values which are missing from the dataset.</p>
+<pre class="r"><code>projectjoin&lt;-inner_join(tidydrinks,tidyhappy, by=c(&quot;country&quot;=&quot;Country&quot;))
+
+tidydrinks%&gt;%anti_join(projectjoin,by=c(&quot;country&quot;))%&gt;%nrow()</code></pre>
+<pre><code>## [1] 192</code></pre>
+<pre class="r"><code>tidyhappy%&gt;%anti_join(projectjoin,by=c(&quot;Country&quot;=&quot;country&quot;))%&gt;%nrow()</code></pre>
+<pre><code>## [1] 13</code></pre>
+<pre class="r"><code>tidyjoin&lt;-projectjoin%&gt;%pivot_wider(names_from = &quot;type&quot;, values_from = &quot;value&quot;)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Create summary statistics</p>
+<ul>
+<li><p>Use <em>all six</em> core <code>dplyr</code> functions (filter, select, arrange, group_by, mutate, summarize) to manipulate and explore your dataset. For mutate, create a new variable that is a function of at least one other variable, preferably using a dplyr vector function (see dplyr cheatsheet). It’s fine to use the <code>_if</code>, <code>_at</code>, <code>_all</code> versions of mutate/summarize instead (indeed, it is encouraged if you have lots of variables)</p></li>
+<li><p>Create summary statistics (mean, sd, var, n, quantile, min, max, n_distinct, cor, etc) for each of your numeric variables overall and after grouping by one of your categorical variables (either together or one-at-a-time; if you have two categorical variables, try to include at least one statistic based on a grouping of two categorical variables simultaneously). If you do not have any categorical variables, create one using mutate to satisfy the requirements above. Ideally, you will find a way to show these summary statistics in an easy-to-read table (e.g., by reshaping). If you have lots of numeric variables, or your categorical variables have too many categories, just pick a few (either numeric variables or categories of a categorical variable) and summarize based on those. It would be a good idea to show a correlation matrix for your numeric variables! I used group_by to group the data by country and used summarize to find the count (n) of countries per dataset. The ‘tidyjoin’ dataset listed 145 countries, the ‘tidyhappy’ dataset listed 158 countries, and the ‘tidydrink’ dataset listed 193 countries.</p></li>
+</ul></li>
+</ol>
+<p>For each type of alcohol, I manipulated the dataset by using group_by to group by country, select to only focus on type, value, Happiness Score for each country. I used arrange to order the value ascending from least to greatest. For each dataset, I used filter for each type of liquid and created 3 new sets for beer, wine, and spirit.</p>
+<p>For each of the 3 new datasets, I used mutate to add a new variable with a mean function to give us the mean value of each alcohol. The mean value for beer was about 110 servings, the mean value for wine was about 55.7 servings, and the mean value for spirit was about 77.5 servings.</p>
+<p>I also used summary for each of the new datasets to find the min, max, mean, median, and quartiles for each type of alcohol. Based on this data, we can conclude that beer is relatively the most consumed alcohol with the greatest mean of 109.6 servings while wine is the least consumed alcohol with a mean of 55.71 servings.</p>
+<p>I found the covariance of the data to be high which means that the 2 variables may be redundant. Since correlation is equal to the covariance of the Z-scores, I used scale%&gt;%cov to find the correlation between value and Happiness Score. I found this correaltion to be 0.34 which is only slightly strong and postive.</p>
+<pre class="r"><code>tidyjoin%&gt;%group_by(country)%&gt;%summarize(count=n())%&gt;%nrow()</code></pre>
+<pre><code>## [1] 145</code></pre>
+<pre class="r"><code>tidyhappy%&gt;%group_by(Country)%&gt;%summarize(count=n())%&gt;%nrow()</code></pre>
+<pre><code>## [1] 158</code></pre>
+<pre class="r"><code>tidydrinks%&gt;%group_by(country)%&gt;%summarize(count=n())%&gt;%nrow()</code></pre>
+<pre><code>## [1] 193</code></pre>
+<pre class="r"><code>beer&lt;-projectjoin%&gt;%group_by(country)%&gt;%select(type,value,`Happiness Score`)%&gt;%filter(type==&quot;beer&quot;)%&gt;%arrange(value)</code></pre>
+<pre><code>## Adding missing grouping variables: `country`</code></pre>
+<pre class="r"><code>wine&lt;- projectjoin%&gt;%group_by(country)%&gt;%select(type,value,`Happiness Score`)%&gt;%filter(type==&quot;wine&quot;)%&gt;%arrange(value)</code></pre>
+<pre><code>## Adding missing grouping variables: `country`</code></pre>
+<pre class="r"><code>spirit&lt;- projectjoin%&gt;%group_by(country)%&gt;%select(type,value,`Happiness Score`)%&gt;%filter(type==&quot;spirit&quot;)%&gt;%arrange(value)</code></pre>
+<pre><code>## Adding missing grouping variables: `country`</code></pre>
+<pre class="r"><code>beer%&gt;%mutate(mean_value=mean(beer$value,na.rm=T))</code></pre>
+<pre><code>## # A tibble: 145 x 5
+## # Groups:   country [145]
+##    country      type  value `Happiness Score` mean_value
+##    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt;             &lt;dbl&gt;      &lt;dbl&gt;
+##  1 Afghanistan  beer      0              3.58       110.
+##  2 Bangladesh   beer      0              4.69       110.
+##  3 Iran         beer      0              4.69       110.
+##  4 Kuwait       beer      0              6.30       110.
+##  5 Libya        beer      0              5.75       110.
+##  6 Mauritania   beer      0              4.44       110.
+##  7 Pakistan     beer      0              5.19       110.
+##  8 Saudi Arabia beer      0              6.41       110.
+##  9 Comoros      beer      1              3.96       110.
+## 10 Haiti        beer      1              4.52       110.
+## # … with 135 more rows</code></pre>
+<pre class="r"><code>wine%&gt;%mutate(mean_value=mean(wine$value,na.rm=T))</code></pre>
+<pre><code>## # A tibble: 145 x 5
+## # Groups:   country [145]
+##    country     type  value `Happiness Score` mean_value
+##    &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;             &lt;dbl&gt;      &lt;dbl&gt;
+##  1 Afghanistan wine      0              3.58       55.7
+##  2 Bangladesh  wine      0              4.69       55.7
+##  3 Bhutan      wine      0              5.25       55.7
+##  4 Burundi     wine      0              2.90       55.7
+##  5 Ethiopia    wine      0              4.51       55.7
+##  6 India       wine      0              4.57       55.7
+##  7 Indonesia   wine      0              5.40       55.7
+##  8 Iran        wine      0              4.69       55.7
+##  9 Iraq        wine      0              4.68       55.7
+## 10 Kuwait      wine      0              6.30       55.7
+## # … with 135 more rows</code></pre>
+<pre class="r"><code>spirit%&gt;%mutate(mean_value=mean(spirit$value,na.rm=T))</code></pre>
+<pre><code>## # A tibble: 145 x 5
+## # Groups:   country [145]
+##    country     type   value `Happiness Score` mean_value
+##    &lt;chr&gt;       &lt;chr&gt;  &lt;dbl&gt;             &lt;dbl&gt;      &lt;dbl&gt;
+##  1 Afghanistan spirit     0              3.58       77.5
+##  2 Algeria     spirit     0              5.60       77.5
+##  3 Bangladesh  spirit     0              4.69       77.5
+##  4 Bhutan      spirit     0              5.25       77.5
+##  5 Burundi     spirit     0              2.90       77.5
+##  6 Guinea      spirit     0              3.66       77.5
+##  7 Iran        spirit     0              4.69       77.5
+##  8 Kuwait      spirit     0              6.30       77.5
+##  9 Laos        spirit     0              4.88       77.5
+## 10 Libya       spirit     0              5.75       77.5
+## # … with 135 more rows</code></pre>
+<pre class="r"><code>summary(beer$value)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0    20.0    77.0   109.6   193.0   361.0</code></pre>
+<pre class="r"><code>summary(wine$value)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    1.00    9.00   55.71   86.00  370.00</code></pre>
+<pre class="r"><code>summary(spirit$value)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    6.00   65.00   77.52  118.00  373.00</code></pre>
+<pre class="r"><code>projectjoin%&gt;%select_if(is.numeric)%&gt;%cov</code></pre>
+<pre><code>##                     value Happiness Score
+## value           7462.9737       33.727302
+## Happiness Score   33.7273        1.345055</code></pre>
+<pre class="r"><code>projectjoin%&gt;%select_if(is.numeric)%&gt;%scale%&gt;%cov%&gt;%round(2)</code></pre>
+<pre><code>##                 value Happiness Score
+## value            1.00            0.34
+## Happiness Score  0.34            1.00</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Make visualizations</p>
+<ul>
+<li>If you have 5 variables (the minimum), with 2 numeric variables (the minimum), create at least two effective plots with ggplot that illustrate some of the more interesting findings that your descriptive statistics have turned up.</li>
+<li>Each plot should have at least three variables mapped to separate aesthetics (if correlation heatmap, etc, fine to do the same “variable” on both axes)</li>
+<li>At least one plot should include <code>stat=&quot;summary&quot;</code></li>
+<li>Each plot should include a supporting paragraph describing the relationships that are being visualized and any notable trends that are apparent
+<ul>
+<li>It is fine to include more, but limit yourself to 4. Plots should avoid being redundant! Four bad plots will get a lower grade than two good plots, all else being equal.</li>
+</ul></li>
+<li>If doing a 3D plot (not encouraged, but sometimes useful), it’s fine to use plotly for one plot (make the other(s) in ggplot).</li>
+</ul></li>
+</ol>
+<p>To visualize the data, I gave each type of alcohol its own plot by faceting. I set the x axis to equal the value and the y axis to equal the happiness score. I titled the overall plots “Alcohol Value and Happiness Score”. I also added a line to connect the points. We can see that the correlation between alcohol values and happiness scores is weak.</p>
+<p>In addition, I also created a bar graph with all the countries listed on the x-axis and value of alcohol on the y-axis. I set fill to equal ‘type’ which gives each type of alcohol a different color. Ideally I would have liked to arrange the countries in ascending order from least to greatest happiness score to have a more organize analysis of the relative happiness of different countries. While it is unfortunate that I could not figure out how to arrange the order, we are still able to determine which countries have greater scores versus lower scores.</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(data = projectjoin, aes(x = value, y = `Happiness Score`, color=type)) + geom_point(size=2)+geom_line()+facet_wrap(~type)+ggtitle(&quot;Alcohol Value and Happiness Score&quot;)</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(projectjoin,aes(x=country,y=value,fill=type))+geom_bar(stat=&quot;summary&quot;,fun.y=&quot;mean&quot;,poistion=&quot;dodge&quot;)+theme(axis.text.x=element_text(angle = 90))+ggtitle(&quot;Overall Alcohol Type and Value&quot;)</code></pre>
+<pre><code>## Warning: Ignoring unknown parameters: poistion</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li><p>Perform k-means/PAM clustering or PCA on (at least) your numeric variables.</p>
+<ul>
+<li><p>Include all steps as we discuss in class, including a visualization.</p></li>
+<li><p>If you don’t have at least 3 numeric variables, or you want to cluster based on categorical variables too, convert them to factors in R, generate Gower’s dissimilarity matrix on the data, and do PAM clustering on the dissimilarities.</p></li>
+<li><p>Show how you chose the final number of clusters/principal components</p></li>
+<li><p>Interpret the final clusters/principal components</p></li>
+</ul></li>
+</ol>
+<p>I started by using full_join to merge the ‘happy’ and ‘drinks’ dataset, matched by each country. I omitted the NA in order to remove missing data and allow for covariance and correlation analysis. I named this merged dataset ‘projectfull’.</p>
+<p>Since principal component analysis (PCA) focuses on covariation and correlation, I started off by using select_if(is.numeric)%&gt;%cov and select_if(is.numeric)%&gt;%scale%&gt;%cov% to find those respective numbers for each pair of variables.</p>
+<p>I created a new data set called ‘pcajoin’ to select only the numeric data from the ‘projectfull’ dataset.I scaled these variables which takes the value, subtracts it by the mean and divides it by the standard deviation. I used ggplot to create a scatterplot with these scaled total_litres_of_pure_alcohol values on the x-axis and happiness score on the y-axis.</p>
+<p>I began adding layers to the ggplot to show a 1-D representation of the data by only using the x-axis. This is not ideal because we lose information about value. Although the idea is to reduce dimensions, we are also trying to keep as much of the important information as we can. The variance of this data was calculated to be 1.</p>
+<p>To adjust this, I used linear regression to show a line that minimizes the vertical distance to the points. Than I added the variance of both the total_litres_of_pure_alcohol value data and the fitted.values data to find how spread out the points are on the line. This was calculated to be about 1.19. The points on this linear regression have a greater variance than the points on the single horizontal line.</p>
+<p>Then I rotated the linear regression line down to the horizontal line. Pink dots on the blue line are the spread of points on the linear regression line while the green dots are spread of points on the horizontal axis.Based on this dot plot, The pink dots have a greater variance.</p>
+<p>I also found the line that maximizes the variance of the points by minimizing the orthogonal residuals.This helps with the next step which is where I found the principal components. The first principal component (PC1) is the direction in which data has the most variance. The second principal component (PC2) is the direction of the variance perpindicular to PC1. According to the lecture notes, No data here is changed. We are simply just looking at it in a different way.</p>
+<p>Based on the PCA, we can say that countries with dots above PC1 tend to have greater total litres of alcohol and happiness scores. Both total litres of alcohol and happiness score contribute positively to this component.</p>
+<p>On the other hand, total litres of alcohol contributes positively and happiness score contribute negatively for PC2. Countries with higher scores on PC2 tend to have greater happiness scores than the total litres of alcohol. Countries with lower scores on PC2 tend to have greater total litres of alcohol than happiness scores.</p>
+<pre class="r"><code>projectfull&lt;-full_join(happy,drinks,by=c(&quot;Country&quot;=&quot;country&quot;))%&gt;%na.omit()
+
+projectfull%&gt;%select_if(is.numeric)%&gt;%cov</code></pre>
+<pre><code>##                               Happiness Rank Happiness Score Standard Error
+## Happiness Rank                  2147.2260536   -53.446461446   0.1349706585
+## Happiness Score                  -53.4464614     1.352060407  -0.0037037719
+## Standard Error                     0.1349707    -0.003703772   0.0002826424
+## Economy (GDP per Capita)         -14.6306879     0.365893136  -0.0017042222
+## Family                            -9.4869663     0.240254576  -0.0005871114
+## Health (Life Expectancy)          -8.3342474     0.206296503  -0.0014066948
+## Freedom                           -3.9976600     0.102477192  -0.0003978797
+## Trust (Government Corruption)     -2.2721613     0.060260785  -0.0003687642
+## Generosity                        -0.8605507     0.024917555  -0.0002788226
+## Dystopia Residual                -13.8645266     0.351972076   0.0010397820
+## beer_servings                  -2426.3122605    61.466312739  -0.2185738156
+## spirit_servings                -1144.7801724    27.684955939  -0.0392777189
+## wine_servings                  -1733.6518199    44.479945402  -0.2972024430
+## total_litres_of_pure_alcohol     -79.0016284     1.980646288  -0.0078845747
+##                               Economy (GDP per Capita)        Family
+## Happiness Rank                           -14.630687948 -9.4869663266
+## Happiness Score                            0.365893136  0.2402545765
+## Standard Error                            -0.001704222 -0.0005871114
+## Economy (GDP per Capita)                   0.159642332  0.0733159766
+## Family                                     0.073315977  0.0782437513
+## Health (Life Expectancy)                   0.079242685  0.0366471749
+## Freedom                                    0.021855743  0.0189645771
+## Trust (Government Corruption)              0.016858756  0.0074745038
+## Generosity                                -0.000787312  0.0029611326
+## Dystopia Residual                          0.015767651  0.0226508641
+## beer_servings                             22.256256350 16.0366459952
+## spirit_servings                           11.070230768  9.0340131312
+## wine_servings                             17.994974815  9.5519311058
+## total_litres_of_pure_alcohol               0.755978982  0.5923009895
+##                               Health (Life Expectancy)       Freedom
+## Happiness Rank                            -8.334247371 -3.9976600096
+## Happiness Score                            0.206296503  0.1024771917
+## Standard Error                            -0.001406695 -0.0003978797
+## Economy (GDP per Capita)                   0.079242685  0.0218557434
+## Family                                     0.036647175  0.0189645771
+## Health (Life Expectancy)                   0.059433580  0.0137710131
+## Freedom                                    0.013771013  0.0227266141
+## Trust (Government Corruption)              0.007834846  0.0088685241
+## Generosity                                 0.003049390  0.0071599866
+## Dystopia Residual                          0.006321982  0.0091362824
+## beer_servings                             11.577632489  4.0968870584
+## spirit_servings                            7.834800430  0.9879605546
+## wine_servings                             10.930043873  3.1445681365
+## total_litres_of_pure_alcohol               0.409672297  0.1261003152
+##                               Trust (Government Corruption)    Generosity
+## Happiness Rank                                -2.2721613123 -0.8605506777
+## Happiness Score                                0.0602607850  0.0249175554
+## Standard Error                                -0.0003687642 -0.0002788226
+## Economy (GDP per Capita)                       0.0168587560 -0.0007873120
+## Family                                         0.0074745038  0.0029611326
+## Health (Life Expectancy)                       0.0078348464  0.0030493899
+## Freedom                                        0.0088685241  0.0071599866
+## Trust (Government Corruption)                  0.0144054983  0.0037583669
+## Generosity                                     0.0037583669  0.0159863771
+## Dystopia Residual                              0.0010623407 -0.0072092055
+## beer_servings                                  0.1256260881 -1.2031396786
+## spirit_servings                               -0.9070505618 -0.9975126719
+## wine_servings                                  2.2806852136  0.4531852577
+## total_litres_of_pure_alcohol                   0.0239010452 -0.0334971089
+##                               Dystopia Residual beer_servings spirit_servings
+## Happiness Rank                    -13.864526595 -2426.3122605   -1.144780e+03
+## Happiness Score                     0.351972076    61.4663127    2.768496e+01
+## Standard Error                      0.001039782    -0.2185738   -3.927772e-02
+## Economy (GDP per Capita)            0.015767651    22.2562563    1.107023e+01
+## Family                              0.022650864    16.0366460    9.034013e+00
+## Health (Life Expectancy)            0.006321982    11.5776325    7.834800e+00
+## Freedom                             0.009136282     4.0968871    9.879606e-01
+## Trust (Government Corruption)       0.001062341     0.1256261   -9.070506e-01
+## Generosity                         -0.007209206    -1.2031397   -9.975127e-01
+## Dystopia Residual                   0.304234611     8.5755112    6.616478e-01
+## beer_servings                       8.575511215 10729.8325670    4.018065e+03
+## spirit_servings                     0.661647771  4018.0646073    6.240459e+03
+## wine_servings                       0.124910844  5043.8774904    1.537993e+03
+## total_litres_of_pure_alcohol        0.106103602   339.3038218    1.918968e+02
+##                               wine_servings total_litres_of_pure_alcohol
+## Happiness Rank                -1733.6518199                -79.001628352
+## Happiness Score                  44.4799454                  1.980646288
+## Standard Error                   -0.2972024                 -0.007884575
+## Economy (GDP per Capita)         17.9949748                  0.755978982
+## Family                            9.5519311                  0.592300990
+## Health (Life Expectancy)         10.9300439                  0.409672297
+## Freedom                           3.1445681                  0.126100315
+## Trust (Government Corruption)     2.2806852                  0.023901045
+## Generosity                        0.4531853                 -0.033497109
+## Dystopia Residual                 0.1249108                  0.106103602
+## beer_servings                  5043.8774904                339.303821839
+## spirit_servings                1537.9931513                191.896781609
+## wine_servings                  7176.1932950                227.124037356
+## total_litres_of_pure_alcohol    227.1240374                 14.926789272</code></pre>
+<pre class="r"><code>projectfull%&gt;%select_if(is.numeric)%&gt;%scale%&gt;%cov%&gt;%round(2)</code></pre>
+<pre><code>##                               Happiness Rank Happiness Score Standard Error
+## Happiness Rank                          1.00           -0.99           0.17
+## Happiness Score                        -0.99            1.00          -0.19
+## Standard Error                          0.17           -0.19           1.00
+## Economy (GDP per Capita)               -0.79            0.79          -0.25
+## Family                                 -0.73            0.74          -0.12
+## Health (Life Expectancy)               -0.74            0.73          -0.34
+## Freedom                                -0.57            0.58          -0.16
+## Trust (Government Corruption)          -0.41            0.43          -0.18
+## Generosity                             -0.15            0.17          -0.13
+## Dystopia Residual                      -0.54            0.55           0.11
+## beer_servings                          -0.51            0.51          -0.13
+## spirit_servings                        -0.31            0.30          -0.03
+## wine_servings                          -0.44            0.45          -0.21
+## total_litres_of_pure_alcohol           -0.44            0.44          -0.12
+##                               Economy (GDP per Capita) Family
+## Happiness Rank                                   -0.79  -0.73
+## Happiness Score                                   0.79   0.74
+## Standard Error                                   -0.25  -0.12
+## Economy (GDP per Capita)                          1.00   0.66
+## Family                                            0.66   1.00
+## Health (Life Expectancy)                          0.81   0.54
+## Freedom                                           0.36   0.45
+## Trust (Government Corruption)                     0.35   0.22
+## Generosity                                       -0.02   0.08
+## Dystopia Residual                                 0.07   0.15
+## beer_servings                                     0.54   0.55
+## spirit_servings                                   0.35   0.41
+## wine_servings                                     0.53   0.40
+## total_litres_of_pure_alcohol                      0.49   0.55
+##                               Health (Life Expectancy) Freedom
+## Happiness Rank                                   -0.74   -0.57
+## Happiness Score                                   0.73    0.58
+## Standard Error                                   -0.34   -0.16
+## Economy (GDP per Capita)                          0.81    0.36
+## Family                                            0.54    0.45
+## Health (Life Expectancy)                          1.00    0.37
+## Freedom                                           0.37    1.00
+## Trust (Government Corruption)                     0.27    0.49
+## Generosity                                        0.10    0.38
+## Dystopia Residual                                 0.05    0.11
+## beer_servings                                     0.46    0.26
+## spirit_servings                                   0.41    0.08
+## wine_servings                                     0.53    0.25
+## total_litres_of_pure_alcohol                      0.43    0.22
+##                               Trust (Government Corruption) Generosity
+## Happiness Rank                                        -0.41      -0.15
+## Happiness Score                                        0.43       0.17
+## Standard Error                                        -0.18      -0.13
+## Economy (GDP per Capita)                               0.35      -0.02
+## Family                                                 0.22       0.08
+## Health (Life Expectancy)                               0.27       0.10
+## Freedom                                                0.49       0.38
+## Trust (Government Corruption)                          1.00       0.25
+## Generosity                                             0.25       1.00
+## Dystopia Residual                                      0.02      -0.10
+## beer_servings                                          0.01      -0.09
+## spirit_servings                                       -0.10      -0.10
+## wine_servings                                          0.22       0.04
+## total_litres_of_pure_alcohol                           0.05      -0.07
+##                               Dystopia Residual beer_servings spirit_servings
+## Happiness Rank                            -0.54         -0.51           -0.31
+## Happiness Score                            0.55          0.51            0.30
+## Standard Error                             0.11         -0.13           -0.03
+## Economy (GDP per Capita)                   0.07          0.54            0.35
+## Family                                     0.15          0.55            0.41
+## Health (Life Expectancy)                   0.05          0.46            0.41
+## Freedom                                    0.11          0.26            0.08
+## Trust (Government Corruption)              0.02          0.01           -0.10
+## Generosity                                -0.10         -0.09           -0.10
+## Dystopia Residual                          1.00          0.15            0.02
+## beer_servings                              0.15          1.00            0.49
+## spirit_servings                            0.02          0.49            1.00
+## wine_servings                              0.00          0.57            0.23
+## total_litres_of_pure_alcohol               0.05          0.85            0.63
+##                               wine_servings total_litres_of_pure_alcohol
+## Happiness Rank                        -0.44                        -0.44
+## Happiness Score                        0.45                         0.44
+## Standard Error                        -0.21                        -0.12
+## Economy (GDP per Capita)               0.53                         0.49
+## Family                                 0.40                         0.55
+## Health (Life Expectancy)               0.53                         0.43
+## Freedom                                0.25                         0.22
+## Trust (Government Corruption)          0.22                         0.05
+## Generosity                             0.04                        -0.07
+## Dystopia Residual                      0.00                         0.05
+## beer_servings                          0.57                         0.85
+## spirit_servings                        0.23                         0.63
+## wine_servings                          1.00                         0.69
+## total_litres_of_pure_alcohol           0.69                         1.00</code></pre>
+<pre class="r"><code>pcajoin&lt;-projectfull%&gt;%select_if(is.numeric)
+pcajoin = data.frame(scale(pcajoin))
+ggplot(pcajoin, aes(x = total_litres_of_pure_alcohol, y = Happiness.Score))+geom_point()+coord_fixed()</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>projectgg = ggplot(pcajoin,aes(x=total_litres_of_pure_alcohol, y=Happiness.Score))+geom_point()
+projectgg + geom_segment(aes(xend=total_litres_of_pure_alcohol, yend=0),lty=2)+geom_hline(yintercept = 0,color=&quot;light blue&quot;,lwd=2)+geom_point(aes(y=0),colour=&quot;pink&quot;,size=0.5)+coord_fixed()</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<pre class="r"><code>ggplot(pcajoin,aes(x=total_litres_of_pure_alcohol,y=0))+geom_abline(intercept=0, slope=0, col=&quot;light blue&quot;, lwd=1.5)+geom_point(color=&quot;pink&quot;,size=0.5)+theme(axis.text.y = element_blank(),axis.title.y=element_blank())+coord_fixed()</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-5-3.png" width="672" /></p>
+<pre class="r"><code>var(pcajoin$total_litres_of_pure_alcohol)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>reg1 = lm(total_litres_of_pure_alcohol  ~ Happiness.Score, data = pcajoin)
+a1 = reg1$coefficients[1]
+b1 = reg1$coefficients[2]
+pline1 = projectgg + geom_abline(intercept = a1, slope = b1, col = &quot;light blue&quot;, lwd = 1.5)
+pline1 + geom_segment(aes(xend = total_litres_of_pure_alcohol, yend = reg1$fitted.values),lty=2)+geom_point(y=reg1$fitted.values,size = 0.5, shape = 16,color=&quot;pink&quot;)+coord_fixed()</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-5-4.png" width="672" /></p>
+<pre class="r"><code>var(pcajoin$total_litres_of_pure_alcohol)+var(reg1$fitted.values)</code></pre>
+<pre><code>## [1] 1.19438</code></pre>
+<pre class="r"><code>pf&lt;-projectfull%&gt;%mutate(fit=reg1$fitted.values)%&gt;%select(total_litres_of_pure_alcohol,`Happiness Score`,fit)%&gt;%mutate(dist=ifelse(`Happiness Score`&lt;0,-sqrt(`Happiness Score`^2+fit^2),sqrt(`Happiness Score`^2+fit^2)))
+
+ pf%&gt;%ggplot(aes(x=total_litres_of_pure_alcohol, y=0))+geom_abline(intercept = 0,slope=0,col=&quot;light blue&quot;,alpha=.8,lwd=1.5)+geom_point(col=&quot;pink&quot;,size=2,alpha=.8)+geom_point(aes(x=dist),col=&quot;green&quot;, size=2,alpha=0.8)</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-5-5.png" width="672" /></p>
+<pre class="r"><code>xy=cbind(projectfull$total_litres_of_pure_alcohol,projectfull$`Happiness Score`)
+svda=svd(xy)
+pc = xy %*% svda$v[, 1] %*% t(svda$v[, 1])
+bp= svda$v[2, 1] / svda$v[1, 1]
+ap = mean(pc[, 2]) - bp * mean(pc[, 1])
+
+projectgg + geom_segment(xend = pc[, 1], yend = pc[, 2]) +
+geom_abline(intercept = ap, slope = bp, col = &quot;blue&quot;, lwd = 1.5)+coord_fixed()+geom_point(aes(x=pc[,1],y=pc[,2]),color=&quot;purple&quot;,size=3)</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-5-6.png" width="672" /></p>
+<pre class="r"><code>projectgg+geom_vline(xintercept = 0,lty=2)+ geom_hline(yintercept = 0,lty=2)+ geom_abline(intercept = ap, slope = bp, col = &quot;blue&quot;, lwd = 1)+coord_fixed()+ geom_abline(intercept = ap, slope = -bp, col = &quot;red&quot;, lwd = 1)+  annotate(geom=&quot;text&quot;,-1,1.5,col=&quot;red&quot;,label=&quot;PC2&quot;,size=7)+  annotate(geom=&quot;text&quot;,1,1.5,col=&quot;blue&quot;,label=&quot;PC1&quot;,size=7)</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-5-7.png" width="672" /></p>
+<pre class="r"><code>ppdf = tibble(PC1n = -svda$u[, 1] * svda$d[1], PC2n = svda$u[, 2] * svda$d[2])
+
+ggplot(ppdf, aes(x = PC1n, y = PC2n)) + geom_point() + xlab(&quot;PC1 &quot;)+ylab(&quot;PC2&quot;)+geom_abline(intercept = ap, slope = bp,lty=2)+geom_abline(intercept = ap, slope = -bp,lty=2)+geom_vline(xintercept = 0,lwd=1.5,col=&quot;red&quot;)+geom_hline(yintercept = 0,lwd=1.5,col=&quot;blue&quot;)+coord_fixed()</code></pre>
+<p><img src="../Project1_files/figure-html/unnamed-chunk-5-8.png" width="672" /></p>
+<ul>
+<li>For every step, you should document what your code does (in words) and what you see in the data.</li>
+</ul>
+</div>
+<div id="rubric" class="section level3">
+<h3>Rubric</h3>
+<p>Prerequisite: Finding appropriate data from at least two sources per the instructions above: Failure to do this will result in a 0! You will submit a .Rmd file and a knitted document (pdf).</p>
+<div id="introduction-4-pts" class="section level4">
+<h4>0. Introduction (4 pts)</h4>
+<ul>
+<li>Write a narrative introductory paragraph (or two) describing the datasets you have chosen, the variables they contain, how they were acquired, and why they are interesting to you. Expand on potential associations you may expect, if any.</li>
+</ul>
+</div>
+<div id="tidying-rearranging-widelong-8-pts" class="section level4">
+<h4>1. Tidying: Rearranging Wide/Long (8 pts)</h4>
+<ul>
+<li>Tidy the datasets (using the <code>tidyr</code> functions <code>pivot_longer</code>/<code>gather</code> and/or <code>pivot_wider</code>/<code>spread</code>)</li>
+<li>If you data sets are already tidy, untidy them, retidy them.</li>
+<li>Document the process (describe in words what was done)</li>
+</ul>
+</div>
+<div id="joiningmerging-8-pts" class="section level4">
+<h4>2. Joining/Merging (8 pts)</h4>
+<ul>
+<li>Join your datasets into one using a <code>dplyr</code> join function</li>
+<li>If you have multiple observations on the joining variable in either dataset, fix this by collapsing via summarize</li>
+<li>Discuss the process in words, including why you chose the join you did</li>
+<li>Discuss which cases were dropped, if any, and potential problems with this</li>
+</ul>
+</div>
+<div id="wrangling-40-pts" class="section level4">
+<h4>3. Wrangling (40 pts)</h4>
+<ul>
+<li>Use all six core <code>dplyr</code> functions in the service of generating summary statistics (18 pts)
+<ul>
+<li>Use mutate to generate a variable that is a function of at least one other variable</li>
+</ul></li>
+<li>Compute at least 10 different summary statistics using summarize and summarize with group_by (18 pts)
+<ul>
+<li>At least 2 of these should group by a categorical variable. Create one by dichotomizing a numeric if necessary</li>
+<li>If applicable, at least 1 of these 5 should group by two categorical variables</li>
+<li>Strongly encouraged to create a correlation matrix with <code>cor()</code> on your numeric variables</li>
+</ul></li>
+<li>Summarize/discuss all results in no more than two paragraphs (4 pts)</li>
+</ul>
+</div>
+<div id="visualizing-30-pts" class="section level4">
+<h4>4. Visualizing (30 pts)</h4>
+<ul>
+<li><p>Create two effective, polished plots with ggplot</p>
+<ul>
+<li>Each plot should map 3+ variables to aesthetics</li>
+<li>Each plot should have a title and clean labeling for all mappings</li>
+<li>Change at least one default theme element and color for at least one mapping per plot</li>
+<li>For at least one plot, add more tick marks (x, y, or both) than are given by default</li>
+<li>For at least one plot, use the stat=“summary” function</li>
+<li>Supporting paragraph or two (for each plot) describing the relationships/trends that are apparent</li>
+</ul></li>
+</ul>
+</div>
+<div id="dimensionality-reduction-20-pts" class="section level4">
+<h4>5. Dimensionality Reduction (20 pts)</h4>
+<ul>
+<li><p>Either k-means/PAM clustering or PCA (inclusive “or”) should be performed on at least three numeric variables in your dataset</p>
+<ul>
+<li>All relevant steps discussed in class should be included/reported</li>
+<li>A visualization of the clusters or the first few principal components (using ggplot2)</li>
+<li>Supporting paragraph or two describing results found</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="where-do-i-find-data" class="section level3">
+<h3>Where do I find data?</h3>
+<p>OK, brace yourself!</p>
+<p>You can choose ANY datasets you want that meet the above criteria for variables and observations. I’m just sitting here but off the top of my head, if you are into amusement parks, you could look at amusement-park variables, including visits, and how they are impacted by weather. If you are interested in Game of Thrones, you could look at how the frequency of mentions of character names (plus other character variables) and the frequency of baby names in the US…You could even take your old Biostats data and merge in new data (e.g., based on a Google forms timestamp).</p>
+<p>You can make it as serious as you want, or not, but keep in mind that you will be incorporating this project into a portfolio webpage for your final in this course, so choose something that really reflects who you are, or something that you feel will advance you in the direction you hope to move career-wise, or something that you think is really neat. On the flip side, regardless of what you pick, you will be performing all the same tasks, so it doesn’t end up being that big of a deal.</p>
+<p>If you are totally clueless and have no direction at all, log into the server and type</p>
+<pre class="r"><code>data(package = .packages(all.available = TRUE))</code></pre>
+<p>This will print out a list of <strong>ALL datasets in ALL packages</strong> installed on the server (a ton)! Scroll until your eyes bleed! Actually, do not scroll that much… To start with something more manageable, just run the command on your own computer, or just run <code>data()</code> to bring up the datasets in your current environment. To read more about a dataset, do <code>?packagename::datasetname</code>.</p>
+<p>If it is easier for you, and in case you don’t have many packages installed, a list of R datasets from a few common packages (also downloadable in CSV format) is given at the following website: <a href="https://vincentarelbundock.github.io/Rdatasets/datasets.html" class="uri">https://vincentarelbundock.github.io/Rdatasets/datasets.html</a></p>
+<ul>
+<li><p>A good package to download for fun/relevant data is <code>fivethiryeight</code>. Just run <code>install.packages(&quot;fivethirtyeight&quot;), load the packages with</code>library(fivethirtyeight)<code>, run</code>data()`, and then scroll down to view the datasets. Here is an online list of all 127 datasets (with links to the 538 articles). Lots of sports, politics, current events, etc.</p></li>
+<li><p>If you have already started to specialize (e.g., ecology, epidemiology) you might look at discipline-specific R packages (vegan, epi, respectively). We will be using some tools from these packages later in the course, but they come with lots of data too, which you can explore according to the directions above</p></li>
+<li><p>However, you <em>emphatically DO NOT</em> have to use datasets available via R packages! In fact, I would much prefer it if you found the data from completely separate sources and brought them together (a much more realistic experience in the real world)! You can even reuse data from your SDS328M project, provided it shares a variable in common with other data which allows you to merge the two together (e.g., if you still had the timestamp, you could look up the weather that day: <a href="https://www.wunderground.com/history/" class="uri">https://www.wunderground.com/history/</a>). If you work in a research lab or have access to old data, you could potentially merge it with new data from your lab!</p></li>
+<li><p>Here is a curated list of interesting datasets (read-only spreadsheet format): <a href="https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit" class="uri">https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit</a></p></li>
+<li><p>Here is another great compilation of datasets: <a href="https://github.com/rfordatascience/tidytuesday" class="uri">https://github.com/rfordatascience/tidytuesday</a></p></li>
+<li><p>Here is the UCI Machine Learning Repository: <a href="https://archive.ics.uci.edu/ml/index.php" class="uri">https://archive.ics.uci.edu/ml/index.php</a></p>
+<ul>
+<li>See also <a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Biological_data" class="uri">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Biological_data</a></li>
+</ul></li>
+<li><p>Here is another good general place to look: <a href="https://www.kaggle.com/datasets" class="uri">https://www.kaggle.com/datasets</a></p></li>
+<li><p>To help narrow your search down or to see interesting variable ideas, check out <a href="https://www.tylervigen.com/spurious-correlations" class="uri">https://www.tylervigen.com/spurious-correlations</a>. This is the spurious correlations website, and it is fun, but if you look at the bottom of each plot you will see sources for the data. This is a good place to find very general data (or at least get a sense of where you can scrape data together from)!</p></li>
+<li><p>If you are interested in medical data, check out www.countyhealthrankings.org</p></li>
+<li><p>If you are interested in scraping UT data, they make <em>loads</em> of data public (e.g., beyond just professor CVs and syllabi). Check out all the data that is available in the statistical handbooks: <a href="https://reports.utexas.edu/statistical-handbook" class="uri">https://reports.utexas.edu/statistical-handbook</a></p></li>
+</ul>
+<div id="broader-data-sources" class="section level5">
+<h5>Broader data sources:</h5>
+<p><a href="www.data.gov">Data.gov</a> 186,000+ datasets!</p>
+<p><a href="Social%20Explorer">Social Explorer</a> is a nice interface to Census and American Community Survey data (more user-friendly than the government sites). May need to sign up for a free trial.</p>
+<p><a href="www.bls.gov">U.S. Bureau of Labor Statistics</a></p>
+<p><a href="www.census.gov">U.S. Census Bureau</a></p>
+<p><a href="www.gapminder.org/data">Gapminder</a>, data about the world.</p>
+<p>…</p>
+</div>
+</div>
+</div>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="../js/docs.min.js"></script>
+<script src="../js/main.js"></script>
+
+<script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

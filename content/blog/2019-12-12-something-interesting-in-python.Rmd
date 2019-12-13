@@ -1,0 +1,9 @@
+---
+title: Something interesting in Python
+author: Vivian Lam
+date: '2019-12-12'
+slug: something-interesting-in-python
+categories: []
+tags: []
+description: ''
+---

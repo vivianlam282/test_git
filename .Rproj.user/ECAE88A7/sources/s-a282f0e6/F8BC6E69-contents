@@ -1,0 +1,48 @@
+baseurl = "https://example.com/"
+languageCode = "en-US"
+title = "Vivian Lam"
+# Enable comments by entering your Disqus shortname
+disqusShortname = ""
+# Enable Google Analytics by entering your tracking code
+googleAnalytics = ""
+theme = "hugo-sustain"
+
+[permalinks]
+  post = "/:year/:month/:day/:slug"
+
+[params]
+  avatar = "IMG_8629.png"
+  author = "Vivian Lam"
+  description = "Describe your website"
+
+  # Custom assets can be linked with their paths relative to static/
+  custom_css = []
+  custom_js  = []
+
+[params.social]
+  Github        = "vivianlam282"
+  Email         = "vivianlam282@gmail.com"
+  Twitter       = "vivianlammb"
+  
+
+## Main Menu
+[[menu.main]]
+  name = "blog"
+  weight = 100
+  identifier = "blog"
+  url = "/blog/"
+[[menu.main]]
+  name = "project 1"
+  identifier = "project 1"
+  weight = 200
+  url = "/Project1/"
+[[menu.main]]
+  name = "project 2"
+  identifier = "project 2"
+  weight = 300
+  url = "/Project2/"
+[[menu.main]]
+  name = "resume"
+  identifier = "resume"
+  weight = 400
+  url = "/resume/"

@@ -1,0 +1,11 @@
+---
+title: Hello!
+author: Vivian Lam
+date: '2019-12-12'
+slug: hello
+categories: []
+tags: []
+description: ''
+---
+
+Hello! This is my first blog post, how exciting! I really hope I am doing this right. 

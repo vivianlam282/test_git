@@ -1,0 +1,354 @@
+---
+title: 'Project 1: Exploratory Data Analysis'
+author: "SDS348 Fall 2019"
+date: "9/16/2019"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Wrangling and Data Exploration
+
+### Instructions
+A knitted R Markdown document (as a PDF) and the raw R Markdown file (as .Rmd) should both be submitted to Canvas by 11:59pm on 10/20/2019. These two documents will be graded jointly, so they must be consistent (i.e., don’t change the R Markdown file without also updating the knitted document). Knit an html copy too, for later!
+
+I envision your written text forming something of a narrative structure around your code/output. All results presented must have corresponding code. Any answers/results/plots etc. given without the corresponding R code that generated the result will not be graded. Furthermore, all code contained in your final project document should work properly. Please do not include any extraneous code or code which produces error messages. (Code which produces warnings is acceptable, as long as you understand what the warnings mean).
+
+### Find data:
+
+Find two (!) datasets with one variable in common (e.g., dates, years, states, counties, countries), both with at least 50 observations (i.e., rows) in each. When combined, the resulting/final dataset must have **at least 4 different variables (at least 2 numeric) in addition to the common variable**.
+
+Choose as many as you would like! If you found two datasets that you like but they don't have enough variables,  find a third dataset with the same common variable and join all three.
+
+
+### Guidelines
+
+1. If the datasets are not tidy, you will need to reshape them so that every observation has its own row and every variable its own column. If the datasets are both already tidy, you will make them untidy with pivot_wider()/spread() and then tidy them again with pivot_longer/gather() to demonstrate your use of the functions. It's fine to wait until you have your descriptives to use these functions (e.g., you might want to pivot_wider() to rearrange the data to make your descriptive statistics easier to look at); it's fine long as you use them at least once!
+
+    - Depending on your datasets, it might be a good idea to do this before joining. For example, if you have a dataset you like with multiple measurements per year, but you want to join by year, you could average over your numeric variables to get means/year, do counts for your categoricals to get a counts/year, etc.
+  
+Intro : 
+For this project, I decided to work with 2 datasets that illustrate data from countries of the world in attempt to find a relation between drinking and happiness. The first dataset is called 'drinks' and it comes from the 'fivethiryeight' package. This data comes from the World Health Organization and it focuses on average serving size of beer, wines, and spirits per person in each country. The second dataset is called 'happy' and it comes from https://www.kaggle.com/datasets. This data is collected from the Gallup World Poll and organized as a World Happiness Report. The dataset I am using is from 2015 and the variables I am focusing on are country, region, and happiness score.
+I am interested in the world happiness data because I can see how different factors are quantized and contributed to the overall happiness of a country. I have always wanted to visit the happiest place on Earth and compare their lifestyle to the American lifestyle.I chose the second dataset, 'drinks' because I thought it could also be a possible factor of happiness. I am interested in seeing if there is an optimal average amount of alcohol that contributes to happiness in a person.
+
+Tidying : 
+To tidy the 'drinks' dataset, I used pivot_longer to increase the number of rows by separating the types of alcohol and their respectives serving value into new rows for each country. I named this tidy-ed dataset 'tidydrinks'.
+For the 'happy' dataset, I used pivot_wider to increase the number of columns by creating new columns for each unique region. Then to tidy this dataset, I used pivot_longer, select(), and na.omit() to get rid of any extra data and NA's. This makes it easier to focus on that data which can be used to join with the 'drinks' dataset. I named this tidy-ed dataset 'tidyhappy'.
+
+With 'tidyhappy', I omitted the NAs and only selected the columns 'Country' and 'Happiness Score'.
+
+```{R}
+install.packages("tinytex")
+tinytex::install_tinytex()
+library(tidyr)
+install.packages("fivethirtyeight")
+library(fivethirtyeight)
+
+tidydrinks<-drinks%>%pivot_longer(contains("_"))%>%separate(name,into = c("type" ,"servings"))
+
+ 
+library(readr)
+happy <- read_csv("2015.csv")
+tidyhappy<-happy%>%pivot_wider(names_from = "Region", values_from = "Happiness Score")
+tidyhappy<- tidyhappy%>%pivot_longer(11:20,names_to = "Region", values_to = "Happiness Score")
+
+library(dplyr)
+tidyhappy<-tidyhappy%>%select(Country,`Happiness Score`)%>%na.omit()
+                                                  
+```
+    
+
+2. Join your 2+ separate data sources into a single dataset
+
+    - You will document the type of join that you do (left/right/inner/full), including how many cases in each dataset were dropped and why you chose this particular join
+    
+I used an inner_join to join these 2 data sources into a single dataset. I joined them by country and named the new, single dataset 'projectjoin'. I chose to do an inner_join so that the return data would only show matching countries between the datasets 'tidyhappy' and 'tidydrinks'. I used antijoin for each dataset to find which rows did not have a match with the joint dataset.
+
+Since not all countires were shared between the 2 datasets, some cases had to be dropped. 192 cases from 'tidydrinks' and 13 cases from 'tidyhappy' were dropped. The problem with having dropped datasets is that those are data that is not counted for.Removing NA cleans up the data by removing values which are missing from the dataset.
+    
+```{R}
+projectjoin<-inner_join(tidydrinks,tidyhappy, by=c("country"="Country"))
+
+tidydrinks%>%anti_join(projectjoin,by=c("country"))%>%nrow()
+tidyhappy%>%anti_join(projectjoin,by=c("Country"="country"))%>%nrow()
+
+tidyjoin<-projectjoin%>%pivot_wider(names_from = "type", values_from = "value")
+
+
+```
+
+3. Create summary statistics
+
+
+    - Use *all six* core `dplyr` functions (filter, select, arrange, group_by, mutate, summarize) to manipulate and explore your dataset. For mutate, create a  new variable that is a function of at least one other variable, preferably using a dplyr vector function (see dplyr cheatsheet). It's fine to use the `_if`, `_at`, `_all` versions of mutate/summarize instead (indeed, it is encouraged if you have lots of variables)
+    
+    - Create summary statistics (mean, sd, var, n, quantile, min, max, n_distinct, cor, etc) for each of your numeric variables overall and after grouping by one of your categorical variables (either together or one-at-a-time; if you have two categorical variables, try to include at least one statistic based on a grouping of two categorical variables simultaneously). If you do not have any categorical variables, create one using mutate to satisfy the requirements above. Ideally, you will find a way to show these summary statistics in an easy-to-read table (e.g., by reshaping). If you have lots of numeric variables, or your categorical variables have too many categories, just pick a few (either numeric variables or categories of a categorical variable) and summarize based on those. It would be a good idea to show a correlation matrix for your numeric variables!
+ I used group_by to group the data by country and used summarize to find the count (n) of countries per dataset. The 'tidyjoin' dataset listed 145 countries, the 'tidyhappy' dataset listed 158 countries, and the 'tidydrink' dataset listed 193 countries. 
+ 
+For each type of alcohol, I manipulated the dataset by using group_by to group by country, select to only focus on type, value, Happiness Score for each country. I used arrange to order the value ascending from least to greatest. For each dataset, I used filter for each type of liquid and created 3 new sets for beer, wine, and spirit.
+
+For each of the 3 new datasets, I used mutate to add a new variable with a mean function to give us the mean value of each alcohol. The mean value for beer was about 110 servings, the mean value for wine was about 55.7 servings, and the mean value for spirit was about 77.5 servings.
+
+I also used summary for each of the new datasets to find the min, max, mean, median, and quartiles for each type of alcohol. Based on this data, we can conclude that beer is relatively the most consumed alcohol with the greatest mean of 109.6 servings while wine is the least consumed alcohol with a mean of 55.71 servings.
+
+I found the covariance of the data to be high which means that the 2 variables may be redundant. 
+Since correlation is equal to the covariance of the Z-scores, I used scale%>%cov to find the correlation between value and Happiness Score. I found this correaltion to be 0.34 which is only slightly strong and postive.
+
+
+
+```{R}
+tidyjoin%>%group_by(country)%>%summarize(count=n())%>%nrow()
+tidyhappy%>%group_by(Country)%>%summarize(count=n())%>%nrow()
+tidydrinks%>%group_by(country)%>%summarize(count=n())%>%nrow()
+
+beer<-projectjoin%>%group_by(country)%>%select(type,value,`Happiness Score`)%>%filter(type=="beer")%>%arrange(value)
+wine<- projectjoin%>%group_by(country)%>%select(type,value,`Happiness Score`)%>%filter(type=="wine")%>%arrange(value)
+spirit<- projectjoin%>%group_by(country)%>%select(type,value,`Happiness Score`)%>%filter(type=="spirit")%>%arrange(value)
+
+beer%>%mutate(mean_value=mean(beer$value,na.rm=T))
+wine%>%mutate(mean_value=mean(wine$value,na.rm=T))
+spirit%>%mutate(mean_value=mean(spirit$value,na.rm=T))
+
+summary(beer$value)
+summary(wine$value)
+summary(spirit$value)
+
+projectjoin%>%select_if(is.numeric)%>%cov
+projectjoin%>%select_if(is.numeric)%>%scale%>%cov%>%round(2)
+
+
+
+                
+              
+
+
+```
+4. Make visualizations
+
+    - If you have 5 variables (the minimum), with 2 numeric variables (the minimum), create at least two effective plots with ggplot that illustrate some of the more interesting findings that your descriptive statistics have turned up.
+    - Each plot should have at least three variables mapped to separate aesthetics (if correlation heatmap, etc, fine to do the same "variable" on both axes)
+    - At least one plot should include `stat="summary"`
+    - Each plot should include a supporting paragraph describing the relationships that are being visualized and any notable trends that are apparent
+        - It is fine to include more, but limit yourself to 4. Plots should avoid being redundant! Four bad plots will get a lower grade than two good plots, all else being equal.
+    - If doing a 3D plot (not encouraged, but sometimes useful), it's fine to use plotly for one plot (make the other(s) in ggplot).
+    
+To visualize the data, I gave each type of alcohol its own plot by faceting. I set the x axis to equal the value and the y axis to equal the happiness score. I titled the overall plots "Alcohol Value and Happiness Score". I also added a line to connect the points. We can see that the correlation between alcohol values and happiness scores is weak.
+
+In addition, I also created a bar graph with all the countries listed on the x-axis and value of alcohol on the y-axis. I set fill to equal 'type' which gives each type of alcohol a different color. Ideally I would have liked to arrange the countries in ascending order from least to greatest happiness score to have a more organize analysis of the relative happiness of different countries. While it is unfortunate that I could not figure out how to arrange the order, we are still able to determine which countries have greater scores versus lower scores.
+    
+```{R}   
+
+library(ggplot2)
+ggplot(data = projectjoin, aes(x = value, y = `Happiness Score`, color=type)) + geom_point(size=2)+geom_line()+facet_wrap(~type)+ggtitle("Alcohol Value and Happiness Score")
+
+
+ggplot(projectjoin,aes(x=country,y=value,fill=type))+geom_bar(stat="summary",fun.y="mean",poistion="dodge")+theme(axis.text.x=element_text(angle = 90))+ggtitle("Overall Alcohol Type and Value")
+
+
+
+```
+    
+5. Perform k-means/PAM clustering or PCA on (at least) your numeric variables.
+
+    - Include all steps as we discuss in class, including a visualization.
+
+    - If you don't have at least 3 numeric variables, or you want to cluster based on categorical variables too, convert them to factors in R, generate Gower's dissimilarity matrix on the data, and do PAM clustering on the dissimilarities.
+    
+    - Show how you chose the final number of clusters/principal components 
+    
+    - Interpret the final clusters/principal components 
+    
+I started by using full_join to merge the 'happy' and 'drinks' dataset, matched by each country. I omitted the NA in order to remove missing data and allow for covariance and correlation analysis. I named this merged dataset 'projectfull'.
+
+Since principal component analysis (PCA) focuses on covariation and correlation, I started off by using select_if(is.numeric)%>%cov and select_if(is.numeric)%>%scale%>%cov% to find those respective numbers for each pair of variables.
+
+I created a new data set called 'pcajoin' to select only the numeric data from the 'projectfull' dataset.I scaled these variables which takes the value, subtracts it by the mean and divides it by the standard deviation. I used ggplot to create a scatterplot with these scaled total_litres_of_pure_alcohol values on the x-axis and happiness score on the y-axis.
+
+I began adding layers to the ggplot to show a 1-D representation of the data by only using the x-axis. This is not ideal because we lose information about value. Although the idea is to reduce dimensions, we are also trying to keep as much of the important information as we can. The variance of this data was calculated to be 1.
+
+To adjust this, I used linear regression to show a line that minimizes the vertical distance to the points. Than I added the variance of both the total_litres_of_pure_alcohol value data and the fitted.values data to find how spread out the points are on the line. This was calculated to be about 1.19. The points on this linear regression have a greater variance than the points on the single horizontal line.
+
+Then I rotated the linear regression line down to the horizontal line. Pink dots on the blue line are the spread of points on the linear regression line while the green dots are spread of points on the horizontal axis.Based on this dot plot, The pink dots have a greater variance.
+
+I also found the line that maximizes the variance of the points by minimizing the orthogonal residuals.This helps with the next step which is where I found the principal components.
+The first principal component (PC1) is the direction in which data has the most variance. The second principal component (PC2) is the direction of the variance perpindicular to PC1. According to the lecture notes, No data here is changed. We are simply just looking at it in a different way.
+
+Based on the PCA, we can say that countries with dots above PC1 tend to have greater total litres of alcohol and happiness scores. Both total litres of alcohol and happiness score contribute positively to this component.
+
+On the other hand, total litres of alcohol contributes positively and happiness score contribute negatively for PC2. Countries with higher scores on PC2 tend to have greater happiness scores than the total litres of alcohol. Countries with lower scores on PC2 tend to have greater total litres of alcohol than happiness scores.
+
+
+
+
+```{R} 
+projectfull<-full_join(happy,drinks,by=c("Country"="country"))%>%na.omit()
+
+projectfull%>%select_if(is.numeric)%>%cov
+projectfull%>%select_if(is.numeric)%>%scale%>%cov%>%round(2)
+
+pcajoin<-projectfull%>%select_if(is.numeric)
+pcajoin = data.frame(scale(pcajoin))
+ggplot(pcajoin, aes(x = total_litres_of_pure_alcohol, y = Happiness.Score))+geom_point()+coord_fixed()
+
+projectgg = ggplot(pcajoin,aes(x=total_litres_of_pure_alcohol, y=Happiness.Score))+geom_point()
+projectgg + geom_segment(aes(xend=total_litres_of_pure_alcohol, yend=0),lty=2)+geom_hline(yintercept = 0,color="light blue",lwd=2)+geom_point(aes(y=0),colour="pink",size=0.5)+coord_fixed()
+
+ggplot(pcajoin,aes(x=total_litres_of_pure_alcohol,y=0))+geom_abline(intercept=0, slope=0, col="light blue", lwd=1.5)+geom_point(color="pink",size=0.5)+theme(axis.text.y = element_blank(),axis.title.y=element_blank())+coord_fixed()
+var(pcajoin$total_litres_of_pure_alcohol)
+
+
+reg1 = lm(total_litres_of_pure_alcohol  ~ Happiness.Score, data = pcajoin)
+a1 = reg1$coefficients[1]
+b1 = reg1$coefficients[2]
+pline1 = projectgg + geom_abline(intercept = a1, slope = b1, col = "light blue", lwd = 1.5)
+pline1 + geom_segment(aes(xend = total_litres_of_pure_alcohol, yend = reg1$fitted.values),lty=2)+geom_point(y=reg1$fitted.values,size = 0.5, shape = 16,color="pink")+coord_fixed()
+
+var(pcajoin$total_litres_of_pure_alcohol)+var(reg1$fitted.values)
+
+pf<-projectfull%>%mutate(fit=reg1$fitted.values)%>%select(total_litres_of_pure_alcohol,`Happiness Score`,fit)%>%mutate(dist=ifelse(`Happiness Score`<0,-sqrt(`Happiness Score`^2+fit^2),sqrt(`Happiness Score`^2+fit^2)))
+
+ pf%>%ggplot(aes(x=total_litres_of_pure_alcohol, y=0))+geom_abline(intercept = 0,slope=0,col="light blue",alpha=.8,lwd=1.5)+geom_point(col="pink",size=2,alpha=.8)+geom_point(aes(x=dist),col="green", size=2,alpha=0.8)
+
+
+xy=cbind(projectfull$total_litres_of_pure_alcohol,projectfull$`Happiness Score`)
+svda=svd(xy)
+pc = xy %*% svda$v[, 1] %*% t(svda$v[, 1])
+bp= svda$v[2, 1] / svda$v[1, 1]
+ap = mean(pc[, 2]) - bp * mean(pc[, 1])
+
+projectgg + geom_segment(xend = pc[, 1], yend = pc[, 2]) +
+geom_abline(intercept = ap, slope = bp, col = "blue", lwd = 1.5)+coord_fixed()+geom_point(aes(x=pc[,1],y=pc[,2]),color="purple",size=3)
+
+projectgg+geom_vline(xintercept = 0,lty=2)+ geom_hline(yintercept = 0,lty=2)+ geom_abline(intercept = ap, slope = bp, col = "blue", lwd = 1)+coord_fixed()+ geom_abline(intercept = ap, slope = -bp, col = "red", lwd = 1)+  annotate(geom="text",-1,1.5,col="red",label="PC2",size=7)+  annotate(geom="text",1,1.5,col="blue",label="PC1",size=7)
+
+ppdf = tibble(PC1n = -svda$u[, 1] * svda$d[1], PC2n = svda$u[, 2] * svda$d[2])
+
+ggplot(ppdf, aes(x = PC1n, y = PC2n)) + geom_point() + xlab("PC1 ")+ylab("PC2")+geom_abline(intercept = ap, slope = bp,lty=2)+geom_abline(intercept = ap, slope = -bp,lty=2)+geom_vline(xintercept = 0,lwd=1.5,col="red")+geom_hline(yintercept = 0,lwd=1.5,col="blue")+coord_fixed()
+
+
+```
+    
+- For every step, you should document what your code does (in words) and what you see in the data.     
+    
+    
+### Rubric
+
+Prerequisite: Finding appropriate data from at least two sources per the instructions above: Failure to do this will result in a 0! You will submit a .Rmd file and a knitted document (pdf).
+
+#### 0. Introduction (4  pts)
+
+- Write a narrative introductory paragraph (or two) describing the datasets you have chosen, the variables they contain, how they were acquired, and why they are interesting to you. Expand on potential associations you may expect, if any.
+
+#### 1. Tidying: Rearranging Wide/Long (8 pts)
+
+- Tidy the datasets (using the `tidyr` functions `pivot_longer`/`gather` and/or `pivot_wider`/`spread`) 
+- If you data sets are already tidy, untidy them, retidy them.
+- Document the process (describe in words what was done)
+    
+#### 2. Joining/Merging (8 pts)
+
+- Join your datasets into one using a `dplyr` join function
+- If you have multiple observations on the joining variable in either dataset, fix this by collapsing via summarize
+- Discuss the process in words, including why you chose the join you did
+- Discuss which cases were dropped, if any, and potential problems with this
+
+#### 3. Wrangling (40 pts)
+
+- Use all six core `dplyr` functions in the service of generating summary statistics (18 pts)
+    - Use mutate to generate a variable that is a function of at least one other variable
+
+- Compute at least 10 different summary statistics using summarize and summarize with group_by (18 pts)
+    - At least 2 of these should group by a categorical variable. Create one by dichotomizing a numeric if necessary
+    - If applicable, at least 1 of these 5 should group by two categorical variables
+    - Strongly encouraged to create a correlation matrix with `cor()` on your numeric variables
+
+- Summarize/discuss all results in no more than two paragraphs (4 pts)
+
+
+#### 4. Visualizing (30 pts)
+
+- Create two effective, polished plots with ggplot
+
+    - Each plot should map 3+ variables to aesthetics 
+    - Each plot should have a title and clean labeling for all mappings
+    - Change at least one default theme element and color for at least one mapping per plot
+    - For at least one plot, add more tick marks (x, y, or both) than are given by default
+    - For at least one plot, use the stat="summary" function
+    - Supporting paragraph or two (for each plot) describing the relationships/trends that are apparent
+    
+#### 5. Dimensionality Reduction (20 pts) 
+
+- Either k-means/PAM clustering or PCA (inclusive "or") should be performed on at least three numeric variables in your dataset
+
+    - All relevant steps discussed in class should be included/reported
+    - A visualization of the clusters or the first few principal components (using ggplot2)
+    - Supporting paragraph or two describing results found 
+    
+
+### Where do I find data?
+
+OK, brace yourself!
+
+You can choose ANY datasets you want that meet the above criteria for variables and observations. I'm just sitting here but off the top of my head, if you are into amusement parks, you could look at amusement-park variables, including visits, and how they are impacted by weather. If you are interested in Game of Thrones, you could look at how the frequency of mentions of character names (plus other character variables) and the frequency of baby names in the US...You could even take your old Biostats data and merge in new data (e.g., based on a Google forms timestamp).
+
+You can make it as serious as you want, or not, but keep in mind that you will be incorporating this project into a portfolio webpage for your final in this course, so choose something that really reflects who you are, or something that you feel will advance you in the direction you hope to move career-wise, or something that you think is really neat. On the flip side, regardless of what you pick, you will be performing all the same tasks, so it doesn't end up being that big of a deal.
+
+If you are totally clueless and have no direction at all, log into the server and type 
+
+```{R eval=F}
+data(package = .packages(all.available = TRUE))
+```
+
+This will print out a list of **ALL datasets in ALL packages** installed on the server (a ton)! Scroll until your eyes bleed! Actually, do not scroll that much... To start with something more manageable, just run the command on your own computer, or just run `data()` to bring up the datasets in your current environment. To read more about a dataset, do `?packagename::datasetname`. 
+
+If it is easier for you, and in case you don't have many packages installed, a list of R datasets from a few common packages (also downloadable in CSV format) is given at the following website: https://vincentarelbundock.github.io/Rdatasets/datasets.html
+
+- A good package to download for fun/relevant data is `fivethiryeight`. Just run `install.packages("fivethirtyeight"), load the packages with `library(fivethirtyeight)`, run `data()`, and then scroll down to view the datasets. Here is an online list of all 127 datasets (with links to the 538 articles). Lots of sports, politics, current events, etc.
+
+- If you have already started to specialize (e.g., ecology, epidemiology) you might look at discipline-specific R packages (vegan, epi, respectively). We will be using some tools from these packages later in the course, but they come with lots of data too, which you can explore according to the directions above
+
+- However, you *emphatically DO NOT* have to use datasets available via R packages! In fact, I would much prefer it if you found the data from completely separate sources and brought them together (a much more realistic experience in the real world)! You can even reuse data from your SDS328M project, provided it shares a variable in common with other data which allows you to  merge the two together (e.g., if you still had the timestamp, you could look up the weather that day: https://www.wunderground.com/history/). If you work in a research lab or have access to old data, you could potentially merge it with new data from your lab!
+
+- Here is a curated list of interesting datasets (read-only spreadsheet format): https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit
+
+- Here is another great compilation of datasets: https://github.com/rfordatascience/tidytuesday
+
+- Here is the UCI Machine Learning Repository: https://archive.ics.uci.edu/ml/index.php
+
+    - See also https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Biological_data
+
+- Here is another good general place to look: https://www.kaggle.com/datasets
+
+- To help narrow your search down or to see interesting variable ideas, check out https://www.tylervigen.com/spurious-correlations. This is the spurious correlations website, and it is fun, but if you look at the bottom of each plot you will see sources for the data. This is a good place to find very general data (or at least get a sense of where you can scrape data together from)!
+
+- If you are interested in medical data, check out www.countyhealthrankings.org
+
+- If you are interested in scraping UT data, they make *loads* of data public (e.g., beyond just professor CVs and syllabi). Check out all the data that is available in the statistical handbooks: https://reports.utexas.edu/statistical-handbook
+
+##### Broader data sources:
+
+[Data.gov](www.data.gov) 186,000+ datasets!
+
+[Social Explorer](Social Explorer) is a nice interface to Census and American Community Survey data (more user-friendly than the government sites). May need to sign up for a free trial.
+
+[U.S. Bureau of Labor Statistics](www.bls.gov)
+
+[U.S. Census Bureau](www.census.gov)
+
+[Gapminder](www.gapminder.org/data), data about the world.
+
+...
+
+
+
+
+
