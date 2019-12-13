@@ -58,3 +58,43 @@ Total 254 (delta 65), reused 0 (delta 0)
 remote: Resolving deltas:   0% (0/65)[Kremote: Resolving deltas:   6% (4/65)[Kremote: Resolving deltas:   7% (5/65)[Kremote: Resolving deltas:  12% (8/65)[Kremote: Resolving deltas:  18% (12/65)[Kremote: Resolving deltas:  20% (13/65)[Kremote: Resolving deltas:  21% (14/65)[Kremote: Resolving deltas:  26% (17/65)[Kremote: Resolving deltas:  27% (18/65)[Kremote: Resolving deltas:  29% (19/65)[Kremote: Resolving deltas:  30% (20/65)[Kremote: Resolving deltas:  32% (21/65)[Kremote: Resolving deltas:  33% (22/65)[Kremote: Resolving deltas:  47% (31/65)[Kremote: Resolving deltas:  61% (40/65)[Kremote: Resolving deltas:  69% (45/65)[Kremote: Resolving deltas:  70% (46/65)[Kremote: Resolving deltas:  80% (52/65)[Kremote: Resolving deltas:  89% (58/65)[Kremote: Resolving deltas:  92% (60/65)[Kremote: Resolving deltas:  95% (62/65)[Kremote: Resolving deltas:  98% (64/65)[Kremote: Resolving deltas: 100% (65/65)[Kremote: Resolving deltas: 100% (65/65), done.[K
 To https://github.com/vivianlam282/website.git
  * [new branch]      master -> master
+git add .
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git commit -m "some message"
+[master 59771d6] some message
+ Committer: Mona Lisa <vl5844@educcomp03.ccbb.utexas.edu>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 20 files changed, 659 insertions(+), 36 deletions(-)
+ rewrite .Rproj.user/ECAE88A7/console06/INDEX001 (100%)
+ delete mode 100644 .Rproj.user/ECAE88A7/sources/s-a282f0e6/FEC63C3A
+ create mode 100644 .gitignore
+ create mode 100644 content/resume/2019-12-13-about-me.Rmd
+ create mode 100644 content/resume/2019-12-13-about-me.html
+ create mode 100644 public/resume/2019-12-13-about-me.Rmd
+ create mode 100644 public/resume/about-me/index.html
+ create mode 100644 public/resume/index.html
+ create mode 100644 public/resume/index.xml
+ create mode 100644 public/resume/resume.docx
+ delete mode 100644 static/img/profile.png
+ create mode 100644 static/resume/2019-12-13-about-me.Rmd
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push origin master
+Username for 'https://github.com': vivianlam282
+Password for 'https://vivianlam282@github.com': 
+Counting objects: 34, done.
+Delta compression using up to 32 threads.
+Compressing objects:   3% (1/29)   Compressing objects:   6% (2/29)   Compressing objects:  10% (3/29)   Compressing objects:  13% (4/29)   Compressing objects:  17% (5/29)   Compressing objects:  20% (6/29)   Compressing objects:  24% (7/29)   Compressing objects:  27% (8/29)   Compressing objects:  31% (9/29)   Compressing objects:  34% (10/29)   Compressing objects:  37% (11/29)   Compressing objects:  41% (12/29)   Compressing objects:  44% (13/29)   Compressing objects:  48% (14/29)   Compressing objects:  51% (15/29)   Compressing objects:  55% (16/29)   Compressing objects:  58% (17/29)   Compressing objects:  62% (18/29)   Compressing objects:  65% (19/29)   Compressing objects:  68% (20/29)   Compressing objects:  72% (21/29)   Compressing objects:  75% (22/29)   Compressing objects:  79% (23/29)   Compressing objects:  82% (24/29)   Compressing objects:  86% (25/29)   Compressing objects:  89% (26/29)   Compressing objects:  93% (27/29)   Compressing objects:  96% (28/29)   Compressing objects: 100% (29/29)   Compressing objects: 100% (29/29), done.
+Writing objects:   2% (1/34)   Writing objects:   5% (2/34)   Writing objects:   8% (3/34)   Writing objects:  11% (4/34)   Writing objects:  14% (5/34)   Writing objects:  17% (6/34)   Writing objects:  20% (7/34)   Writing objects:  23% (8/34)   Writing objects:  26% (9/34)   Writing objects:  29% (10/34)   Writing objects:  32% (11/34)   Writing objects:  35% (12/34)   Writing objects:  38% (13/34)   Writing objects:  41% (14/34)   Writing objects:  44% (15/34)   Writing objects:  47% (16/34)   Writing objects:  50% (17/34)   Writing objects:  52% (18/34)   Writing objects:  55% (19/34)   Writing objects:  58% (20/34)   Writing objects:  67% (23/34)   Writing objects:  70% (24/34)   Writing objects:  73% (25/34)   Writing objects:  76% (26/34)   Writing objects:  79% (27/34)   Writing objects:  82% (28/34)   Writing objects:  85% (29/34)   Writing objects:  88% (30/34)   Writing objects:  91% (31/34)   Writing objects:  94% (32/34)   Writing objects:  97% (33/34)   Writing objects: 100% (34/34)   Writing objects: 100% (34/34), 139.38 KiB | 6.06 MiB/s, done.
+Total 34 (delta 15), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/15)[Kremote: Resolving deltas:   6% (1/15)[Kremote: Resolving deltas:  20% (3/15)[Kremote: Resolving deltas:  26% (4/15)[Kremote: Resolving deltas:  33% (5/15)[Kremote: Resolving deltas:  40% (6/15)[Kremote: Resolving deltas:  46% (7/15)[Kremote: Resolving deltas:  53% (8/15)[Kremote: Resolving deltas:  60% (9/15)[Kremote: Resolving deltas:  66% (10/15)[Kremote: Resolving deltas:  73% (11/15)[Kremote: Resolving deltas:  80% (12/15)[Kremote: Resolving deltas:  86% (13/15)[Kremote: Resolving deltas:  93% (14/15)[Kremote: Resolving deltas: 100% (15/15)[Kremote: Resolving deltas: 100% (15/15), completed with 12 local objects.[K
+To https://github.com/vivianlam282/website.git
+   9b0831b..59771d6  master -> master
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ [K]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ [K]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push origin mastercommit -m "some message"add .[K
