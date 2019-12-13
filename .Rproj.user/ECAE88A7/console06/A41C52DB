@@ -22,3 +22,29 @@ Try: apt install <deb name>
 ]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git init
 Reinitialized existing Git repository in /stor/home/vl5844/websiteproject/.git/
 ]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git add .
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git commit -m "first weebsite commit"
+[master 66c436b] first website commit
+ Committer: Vivian Lam <vl5844@educcomp03.ccbb.utexas.edu>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 4 files changed, 26 insertions(+), 9 deletions(-)
+ delete mode 100644 .Rproj.user/ECAE88A7/console06/9FE5B5A9
+ create mode 100644 .Rproj.user/ECAE88A7/console06/A41C52DB
+ rename .Rproj.user/ECAE88A7/console06/{9FE5B5A9.env => A41C52DB.env} (99%)
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git remote add origin hhttps://github.com/vivianlam282/test_git.git
+fatal: remote origin already exists.
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push -u origin mastter
+Username for 'https://github.com': vivianlam282
+Password for 'https://vivianlam282@github.com': 
+remote: Repository not found.
+fatal: repository 'https://github.com/vivianlam282/website.git/' not found
+]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ [K]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ 
