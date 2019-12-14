@@ -1,157 +1,0 @@
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ [K]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ cd~Home.[K/websiteproject [A
-bash: cd~Home/websiteproject: No such file or directory
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ cd~Home/websiteproject [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C Home/websiteprojectt[A]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ [C[C[C[C
-
-WARNING:root:could not open file '/etc/apt/sources.list.d/nodesource.list'
-
-
-Command 'cd~' not found, did you mean:
-
-  command 'cdv' from deb codeville
-  command 'cd5' from deb cd5
-  command 'cdw' from deb cdw
-  command 'cdi' from deb cdo
-  command 'cdo' from deb cdo
-  command 'cde' from deb cde
-  command 'cdp' from deb irpas
-  command 'cdb' from deb tinycdb
-
-Try: apt install <deb name>
-
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git init 
-Reinitialized existing Git repository in /stor/home/vl5844/websiteproject/.git/
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git add . 
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git commit -m "first weebsite commit"
-[master 9b0831b] first website commit
- Committer: Mona Lisa <vl5844@educcomp03.ccbb.utexas.edu>
-Your name and email address were configured automatically based
-on your username and hostname. Please check that they are accurate.
-You can suppress this message by setting them explicitly:
-
-    git config --global user.name "Your Name"
-    git config --global user.email you@example.com
-
-After doing this, you may fix the identity used for this commit with:
-
-    git commit --amend --reset-author
-
- 4 files changed, 25 insertions(+), 7 deletions(-)
- delete mode 100644 .Rproj.user/ECAE88A7/console06/21FDB97D
- create mode 100644 .Rproj.user/ECAE88A7/console06/4BAF8BD8
- rename .Rproj.user/ECAE88A7/console06/{21FDB97D.env => 4BAF8BD8.env} (99%)
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git config --global useer.username YourGithubUsername[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kvivianlam282
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git remote add origin hhttps://github.com/YourGithubUsername/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1P/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.git[1Pe/website.gitve/website.git[1Pe/website.git/e/website.gitve/website.gitoe/website.git[1Pe/website.gitie/website.gitve/website.gitie/website.gitae/website.gitne/website.gitle/website.gitae/website.gitme/website.git2e/website.git8e/website.git2e/website.git[C[C[C[1P/website.git[C[C[C[C[C[C[C[C[1P.git[1P.git[1P.git[1P.git[1P.git[1P.git[1P.gitt.gite.gits.gitt.git_.gitg.giti.gitt.git
-fatal: remote origin already exists.
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push origin master [A
-Username for 'https://github.com': vivianlam282
-Password for 'https://vivianlam282@github.com': 
-remote: Repository not found.
-fatal: repository 'https://github.com/vivianlam282/website.git/' not found
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push origin master [A
-Username for 'https://github.com': vivianlam282
-Password for 'https://vivianlam282@github.com': 
-Counting objects: 254, done.
-Delta compression using up to 32 threads.
-Compressing objects:   0% (1/225)   Compressing objects:   1% (3/225)   Compressing objects:   2% (5/225)   Compressing objects:   3% (7/225)   Compressing objects:   4% (9/225)   Compressing objects:   5% (12/225)   Compressing objects:   6% (14/225)   Compressing objects:   7% (16/225)   Compressing objects:   8% (18/225)   Compressing objects:   9% (21/225)   Compressing objects:  10% (23/225)   Compressing objects:  11% (25/225)   Compressing objects:  12% (27/225)   Compressing objects:  13% (30/225)   Compressing objects:  14% (32/225)   Compressing objects:  15% (34/225)   Compressing objects:  16% (36/225)   Compressing objects:  17% (39/225)   Compressing objects:  18% (41/225)   Compressing objects:  19% (43/225)   Compressing objects:  20% (45/225)   Compressing objects:  21% (48/225)   Compressing objects:  22% (50/225)   Compressing objects:  23% (52/225)   Compressing objects:  24% (54/225)   Compressing objects:  25% (57/225)   Compressing objects:  26% (59/225)   Compressing objects:  27% (61/225)   Compressing objects:  28% (63/225)   Compressing objects:  29% (66/225)   Compressing objects:  30% (68/225)   Compressing objects:  31% (70/225)   Compressing objects:  32% (72/225)   Compressing objects:  33% (75/225)   Compressing objects:  34% (77/225)   Compressing objects:  35% (79/225)   Compressing objects:  36% (81/225)   Compressing objects:  37% (84/225)   Compressing objects:  38% (86/225)   Compressing objects:  39% (88/225)   Compressing objects:  40% (90/225)   Compressing objects:  41% (93/225)   Compressing objects:  42% (95/225)   Compressing objects:  43% (97/225)   Compressing objects:  44% (99/225)   Compressing objects:  45% (102/225)   Compressing objects:  46% (104/225)   Compressing objects:  47% (106/225)   Compressing objects:  48% (108/225)   Compressing objects:  49% (111/225)   Compressing objects:  50% (113/225)   Compressing objects:  51% (115/225)   Compressing objects:  52% (117/225)   Compressing objects:  53% (120/225)   Compressing objects:  54% (122/225)   Compressing objects:  55% (124/225)   Compressing objects:  56% (126/225)   Compressing objects:  57% (129/225)   Compressing objects:  58% (131/225)   Compressing objects:  59% (133/225)   Compressing objects:  60% (135/225)   Compressing objects:  61% (138/225)   Compressing objects:  62% (140/225)   Compressing objects:  63% (142/225)   Compressing objects:  64% (144/225)   Compressing objects:  65% (147/225)   Compressing objects:  66% (149/225)   Compressing objects:  67% (151/225)   Compressing objects:  68% (153/225)   Compressing objects:  69% (156/225)   Compressing objects:  70% (158/225)   Compressing objects:  71% (160/225)   Compressing objects:  72% (162/225)   Compressing objects:  73% (165/225)   Compressing objects:  74% (167/225)   Compressing objects:  75% (169/225)   Compressing objects:  76% (171/225)   Compressing objects:  77% (174/225)   Compressing objects:  78% (176/225)   Compressing objects:  79% (178/225)   Compressing objects:  80% (180/225)   Compressing objects:  81% (183/225)   Compressing objects:  82% (185/225)   Compressing objects:  83% (187/225)   Compressing objects:  84% (189/225)   Compressing objects:  85% (192/225)   Compressing objects:  86% (194/225)   Compressing objects:  87% (196/225)   Compressing objects:  88% (198/225)   Compressing objects:  89% (201/225)   Compressing objects:  90% (203/225)   Compressing objects:  91% (205/225)   Compressing objects:  92% (207/225)   Compressing objects:  93% (210/225)   Compressing objects:  94% (212/225)   Compressing objects:  95% (214/225)   Compressing objects:  96% (216/225)   Compressing objects:  97% (219/225)   Compressing objects:  98% (221/225)   Compressing objects:  99% (223/225)   Compressing objects: 100% (225/225)   Compressing objects: 100% (225/225), done.
-Writing objects:   0% (1/254)   Writing objects:   1% (3/254)   Writing objects:   2% (6/254)   Writing objects:   3% (8/254)   Writing objects:   4% (12/254)   Writing objects:   5% (14/254)   Writing objects:   6% (16/254)   Writing objects:   7% (18/254)   Writing objects:   8% (21/254)   Writing objects:   9% (23/254)   Writing objects:  11% (28/254)   Writing objects:  12% (31/254)   Writing objects:  13% (34/254)   Writing objects:  14% (36/254)   Writing objects:  15% (39/254)   Writing objects:  16% (41/254)   Writing objects:  17% (44/254)   Writing objects:  18% (46/254)   Writing objects:  19% (49/254)   Writing objects:  20% (51/254)   Writing objects:  21% (54/254)   Writing objects:  22% (56/254)   Writing objects:  23% (59/254)   Writing objects:  24% (61/254)   Writing objects:  25% (64/254)   Writing objects:  26% (67/254)   Writing objects:  27% (69/254)   Writing objects:  28% (72/254)   Writing objects:  29% (74/254)   Writing objects:  30% (77/254)   Writing objects:  31% (79/254)   Writing objects:  32% (82/254)   Writing objects:  33% (84/254)   Writing objects:  34% (88/254)   Writing objects:  35% (89/254)   Writing objects:  36% (92/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  37% (94/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  38% (97/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  39% (100/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  40% (102/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  41% (105/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  42% (107/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  43% (110/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  44% (113/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  45% (116/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  46% (117/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  47% (120/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  48% (122/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  49% (125/254), 1.16 MiB | 2.29 MiB/s   Writing objects:  49% (125/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  50% (127/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  51% (130/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  52% (133/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  53% (135/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  54% (138/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  55% (140/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  56% (143/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  57% (145/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  58% (148/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  59% (150/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  60% (153/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  61% (155/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  62% (158/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  63% (161/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  64% (163/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  65% (166/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  66% (168/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  67% (171/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  68% (173/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  69% (176/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  70% (178/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  71% (181/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  72% (183/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  73% (186/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  74% (188/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  75% (191/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  76% (194/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  77% (196/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  78% (199/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  79% (201/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  80% (204/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  81% (206/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  82% (209/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  83% (211/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  84% (214/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  85% (216/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  86% (219/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  87% (221/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  88% (224/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  89% (227/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  90% (229/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  91% (232/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  92% (234/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  93% (237/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  94% (239/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  95% (242/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  96% (244/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  97% (247/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  98% (249/254), 4.69 MiB | 3.98 MiB/s   Writing objects:  99% (252/254), 4.69 MiB | 3.98 MiB/s   Writing objects: 100% (254/254), 4.69 MiB | 3.98 MiB/s   Writing objects: 100% (254/254), 9.72 MiB | 7.43 MiB/s, done.
-Total 254 (delta 65), reused 0 (delta 0)
-remote: Resolving deltas:   0% (0/65)[Kremote: Resolving deltas:   6% (4/65)[Kremote: Resolving deltas:   7% (5/65)[Kremote: Resolving deltas:  12% (8/65)[Kremote: Resolving deltas:  18% (12/65)[Kremote: Resolving deltas:  20% (13/65)[Kremote: Resolving deltas:  21% (14/65)[Kremote: Resolving deltas:  26% (17/65)[Kremote: Resolving deltas:  27% (18/65)[Kremote: Resolving deltas:  29% (19/65)[Kremote: Resolving deltas:  30% (20/65)[Kremote: Resolving deltas:  32% (21/65)[Kremote: Resolving deltas:  33% (22/65)[Kremote: Resolving deltas:  47% (31/65)[Kremote: Resolving deltas:  61% (40/65)[Kremote: Resolving deltas:  69% (45/65)[Kremote: Resolving deltas:  70% (46/65)[Kremote: Resolving deltas:  80% (52/65)[Kremote: Resolving deltas:  89% (58/65)[Kremote: Resolving deltas:  92% (60/65)[Kremote: Resolving deltas:  95% (62/65)[Kremote: Resolving deltas:  98% (64/65)[Kremote: Resolving deltas: 100% (65/65)[Kremote: Resolving deltas: 100% (65/65), done.[K
-To https://github.com/vivianlam282/website.git
- * [new branch]      master -> master
-git add .
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git commit -m "some message"
-[master 59771d6] some message
- Committer: Mona Lisa <vl5844@educcomp03.ccbb.utexas.edu>
-Your name and email address were configured automatically based
-on your username and hostname. Please check that they are accurate.
-You can suppress this message by setting them explicitly:
-
-    git config --global user.name "Your Name"
-    git config --global user.email you@example.com
-
-After doing this, you may fix the identity used for this commit with:
-
-    git commit --amend --reset-author
-
- 20 files changed, 659 insertions(+), 36 deletions(-)
- rewrite .Rproj.user/ECAE88A7/console06/INDEX001 (100%)
- delete mode 100644 .Rproj.user/ECAE88A7/sources/s-a282f0e6/FEC63C3A
- create mode 100644 .gitignore
- create mode 100644 content/resume/2019-12-13-about-me.Rmd
- create mode 100644 content/resume/2019-12-13-about-me.html
- create mode 100644 public/resume/2019-12-13-about-me.Rmd
- create mode 100644 public/resume/about-me/index.html
- create mode 100644 public/resume/index.html
- create mode 100644 public/resume/index.xml
- create mode 100644 public/resume/resume.docx
- delete mode 100644 static/img/profile.png
- create mode 100644 static/resume/2019-12-13-about-me.Rmd
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push origin master
-Username for 'https://github.com': vivianlam282
-Password for 'https://vivianlam282@github.com': 
-Counting objects: 34, done.
-Delta compression using up to 32 threads.
-Compressing objects:   3% (1/29)   Compressing objects:   6% (2/29)   Compressing objects:  10% (3/29)   Compressing objects:  13% (4/29)   Compressing objects:  17% (5/29)   Compressing objects:  20% (6/29)   Compressing objects:  24% (7/29)   Compressing objects:  27% (8/29)   Compressing objects:  31% (9/29)   Compressing objects:  34% (10/29)   Compressing objects:  37% (11/29)   Compressing objects:  41% (12/29)   Compressing objects:  44% (13/29)   Compressing objects:  48% (14/29)   Compressing objects:  51% (15/29)   Compressing objects:  55% (16/29)   Compressing objects:  58% (17/29)   Compressing objects:  62% (18/29)   Compressing objects:  65% (19/29)   Compressing objects:  68% (20/29)   Compressing objects:  72% (21/29)   Compressing objects:  75% (22/29)   Compressing objects:  79% (23/29)   Compressing objects:  82% (24/29)   Compressing objects:  86% (25/29)   Compressing objects:  89% (26/29)   Compressing objects:  93% (27/29)   Compressing objects:  96% (28/29)   Compressing objects: 100% (29/29)   Compressing objects: 100% (29/29), done.
-Writing objects:   2% (1/34)   Writing objects:   5% (2/34)   Writing objects:   8% (3/34)   Writing objects:  11% (4/34)   Writing objects:  14% (5/34)   Writing objects:  17% (6/34)   Writing objects:  20% (7/34)   Writing objects:  23% (8/34)   Writing objects:  26% (9/34)   Writing objects:  29% (10/34)   Writing objects:  32% (11/34)   Writing objects:  35% (12/34)   Writing objects:  38% (13/34)   Writing objects:  41% (14/34)   Writing objects:  44% (15/34)   Writing objects:  47% (16/34)   Writing objects:  50% (17/34)   Writing objects:  52% (18/34)   Writing objects:  55% (19/34)   Writing objects:  58% (20/34)   Writing objects:  67% (23/34)   Writing objects:  70% (24/34)   Writing objects:  73% (25/34)   Writing objects:  76% (26/34)   Writing objects:  79% (27/34)   Writing objects:  82% (28/34)   Writing objects:  85% (29/34)   Writing objects:  88% (30/34)   Writing objects:  91% (31/34)   Writing objects:  94% (32/34)   Writing objects:  97% (33/34)   Writing objects: 100% (34/34)   Writing objects: 100% (34/34), 139.38 KiB | 6.06 MiB/s, done.
-Total 34 (delta 15), reused 0 (delta 0)
-remote: Resolving deltas:   0% (0/15)[Kremote: Resolving deltas:   6% (1/15)[Kremote: Resolving deltas:  20% (3/15)[Kremote: Resolving deltas:  26% (4/15)[Kremote: Resolving deltas:  33% (5/15)[Kremote: Resolving deltas:  40% (6/15)[Kremote: Resolving deltas:  46% (7/15)[Kremote: Resolving deltas:  53% (8/15)[Kremote: Resolving deltas:  60% (9/15)[Kremote: Resolving deltas:  66% (10/15)[Kremote: Resolving deltas:  73% (11/15)[Kremote: Resolving deltas:  80% (12/15)[Kremote: Resolving deltas:  86% (13/15)[Kremote: Resolving deltas:  93% (14/15)[Kremote: Resolving deltas: 100% (15/15)[Kremote: Resolving deltas: 100% (15/15), completed with 12 local objects.[K
-To https://github.com/vivianlam282/website.git
-   9b0831b..59771d6  master -> master
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ [K]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ [K]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push origin mastercommit -m "some message"add .[K
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git add .push origin master
-Username for 'https://github.com': ^[[A    vi  vivianlam282
-Password for 'https://vivianlam282@github.com': 
-To https://github.com/vivianlam282/website.git
- ! [rejected]        master -> master (fetch first)
-error: failed to push some refs to 'https://github.com/vivianlam282/website.git'
-hint: Updates were rejected because the remote contains work that you do
-hint: not have locally. This is usually caused by another repository pushing
-hint: to the same ref. You may want to first integrate the remote changes
-hint: (e.g., 'git pull ...') before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push origin masteradd .[Kpush origin mastercommit -m "some message"
-[master b59fabf] some message
- Committer: Mona Lisa <vl5844@educcomp03.ccbb.utexas.edu>
-Your name and email address were configured automatically based
-on your username and hostname. Please check that they are accurate.
-You can suppress this message by setting them explicitly:
-
-    git config --global user.name "Your Name"
-    git config --global user.email you@example.com
-
-After doing this, you may fix the identity used for this commit with:
-
-    git commit --amend --reset-author
-
- 8 files changed, 47 insertions(+), 5 deletions(-)
- create mode 100644 content/IMG_8629.png
- create mode 100644 public/IMG_8629.png
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git commit -m "some message"[6Ppush origin masteradd .[K
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git add .commit -m "some message"[6Ppush origin master
-Username for 'https://github.com': vivianlam282
-Password for 'https://vivianlam282@github.com': 
-To https://github.com/vivianlam282/website.git
- ! [rejected]        master -> master (fetch first)
-error: failed to push some refs to 'https://github.com/vivianlam282/website.git'
-hint: Updates were rejected because the remote contains work that you do
-hint: not have locally. This is usually caused by another repository pushing
-hint: to the same ref. You may want to first integrate the remote changes
-hint: (e.g., 'git pull ...') before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git push origin masteradd .[Kpush origin master[Kgit push origin masteradd .[Kcommit -m "some message"
-[master 7ef2892] some message
- Committer: Mona Lisa <vl5844@educcomp03.ccbb.utexas.edu>
-Your name and email address were configured automatically based
-on your username and hostname. Please check that they are accurate.
-You can suppress this message by setting them explicitly:
-
-    git config --global user.name "Your Name"
-    git config --global user.email you@example.com
-
-After doing this, you may fix the identity used for this commit with:
-
-    git commit --amend --reset-author
-
- 9 files changed, 48 insertions(+), 7 deletions(-)
- delete mode 100644 themes/hugo-sustain/exampleSite/static/img/profile.png
-]0;/stor/home/vl5844/websiteproject]0;vl5844@educcomp03: ~/websiteproject[01;32mvl5844@educcomp03[00m:[01;34m~/websiteproject[00m$ git commit -m "some message"[6Ppush origin masteradd .[K
